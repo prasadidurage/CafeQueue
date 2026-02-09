@@ -1,15 +1,15 @@
-import React, { useState } from "react";
-import { 
-  View, 
-  Text, 
-  TextInput, 
-  Pressable, 
-  TouchableWithoutFeedback, 
-  Keyboard,
-  SafeAreaView 
-} from "react-native";
 import { useRouter } from "expo-router";
-import { Coffee, Mail, Lock, ChevronRight } from "lucide-react-native";
+import { ChevronRight, Coffee, Lock, Mail } from "lucide-react-native";
+import React, { useState } from "react";
+import {
+  Keyboard,
+  Pressable,
+  SafeAreaView,
+  Text,
+  TextInput,
+  TouchableWithoutFeedback,
+  View,
+} from "react-native";
 
 const Login = () => {
   const router = useRouter();
@@ -18,7 +18,7 @@ const Login = () => {
 
   return (
     <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
-      <SafeAreaView className="flex-1 bg-[#FDFBF7]"> 
+      <SafeAreaView className="flex-1 bg-[#FDFBF7]">
         {/* Decorative Shapes - Coffee Theme Colors */}
         <View className="absolute -top-10 -left-10 w-40 h-40 bg-[#4A3728] rounded-full opacity-10" />
         <View className="absolute top-40 -right-20 w-64 h-64 bg-[#A6AE91] rounded-full opacity-20" />
@@ -67,8 +67,8 @@ const Login = () => {
             </View>
 
             {/* Login Button */}
-            <Pressable 
-              onPress={() => router.replace("/home")}
+            <Pressable
+              onPress={() => router.replace("/(tabs)/home")}
               style={({ pressed }) => [{ opacity: pressed ? 0.9 : 1 }]}
               className="bg-[#4A3728] flex-row justify-center items-center p-5 rounded-2xl shadow-xl shadow-[#4A3728]/30 mt-8"
             >

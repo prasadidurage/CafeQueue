@@ -15,9 +15,9 @@ const Index = () => {
   }
 
   if (user) {
-    return <Redirect href="/" />;
+    return <Redirect href="/(tabs)/home" />;
   } else {
-    return <Redirect href="/login" />;
+    return <Redirect href="/(auth)/login" />;
   }
 };
 
