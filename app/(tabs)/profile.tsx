@@ -39,56 +39,56 @@ const Profile = () => {
   };
 
   const menuItems = [
-    { id: 1, title: "Account Settings", icon: Settings, color: "#3b82f6" },
-    { id: 2, title: "Notifications", icon: Bell, color: "#f59e0b" },
-    { id: 3, title: "Help & Support", icon: HelpCircle, color: "#10b981" },
-    { id: 4, title: "Privacy & Security", icon: Shield, color: "#8b5cf6" },
+    { id: 1, title: "Account Settings", icon: Settings, color: "#4A3728" },
+    { id: 2, title: "Notifications", icon: Bell, color: "#A6AE91" },
+    { id: 3, title: "Help & Support", icon: HelpCircle, color: "#8D7B6D" },
+    { id: 4, title: "Privacy & Security", icon: Shield, color: "#A69080" },
   ];
 
   return (
-    <ScrollView className="flex-1 bg-slate-50">
+    <ScrollView className="flex-1 bg-[#FDFBF7]">
       {/* Header */}
-      <View className="bg-blue-600 pt-12 pb-8 px-6 rounded-b-3xl">
-        <Text className="text-white text-3xl font-bold">Profile</Text>
-        <Text className="text-blue-100 mt-2">Manage your account</Text>
+      <View className="bg-[#4A3728] pt-12 pb-8 px-6 rounded-b-3xl">
+        <Text className="text-[#FDFBF7] text-3xl font-bold">Profile</Text>
+        <Text className="text-[#E0D7D0] mt-2">Manage your account</Text>
       </View>
 
       {/* Profile Card */}
       <View className="px-6 -mt-12">
-        <View className="bg-white rounded-2xl p-6 shadow-lg">
+        <View className="bg-white/90 rounded-2xl p-6 shadow-lg border border-[#E0D7D0]">
           <View className="items-center">
-            <View className="bg-blue-100 w-20 h-20 rounded-full items-center justify-center mb-4">
-              <User size={40} color="#2563eb" />
+            <View className="bg-[#E0D7D0] w-20 h-20 rounded-full items-center justify-center mb-4">
+              <User size={40} color="#4A3728" />
             </View>
-            <Text className="text-slate-900 font-bold text-xl">
+            <Text className="text-[#4A3728] font-bold text-xl">
               {user?.email?.split("@")[0] || "Admin User"}
             </Text>
             <View className="flex-row items-center mt-2">
-              <Mail size={16} color="#64748b" />
-              <Text className="text-slate-500 ml-2">
+              <Mail size={16} color="#8D7B6D" />
+              <Text className="text-[#8D7B6D] ml-2">
                 {user?.email || "admin@cafequeue.com"}
               </Text>
             </View>
             <View className="flex-row items-center mt-1">
-              <Store size={16} color="#64748b" />
-              <Text className="text-slate-500 ml-2">CafeQueue Manager</Text>
+              <Store size={16} color="#8D7B6D" />
+              <Text className="text-[#8D7B6D] ml-2">CafeQueue Manager</Text>
             </View>
           </View>
 
-          <View className="flex-row mt-6 pt-6 border-t border-slate-100">
+          <View className="flex-row mt-6 pt-6 border-t border-[#E0D7D0]">
             <View className="flex-1 items-center">
-              <Text className="text-2xl font-bold text-slate-900">156</Text>
-              <Text className="text-slate-500 text-sm mt-1">Orders</Text>
+              <Text className="text-2xl font-bold text-[#4A3728]">156</Text>
+              <Text className="text-[#8D7B6D] text-sm mt-1">Orders</Text>
             </View>
-            <View className="w-px bg-slate-200" />
+            <View className="w-px bg-[#E0D7D0]" />
             <View className="flex-1 items-center">
-              <Text className="text-2xl font-bold text-slate-900">4.8</Text>
-              <Text className="text-slate-500 text-sm mt-1">Rating</Text>
+              <Text className="text-2xl font-bold text-[#4A3728]">4.8</Text>
+              <Text className="text-[#8D7B6D] text-sm mt-1">Rating</Text>
             </View>
-            <View className="w-px bg-slate-200" />
+            <View className="w-px bg-[#E0D7D0]" />
             <View className="flex-1 items-center">
-              <Text className="text-2xl font-bold text-slate-900">$2.4K</Text>
-              <Text className="text-slate-500 text-sm mt-1">Revenue</Text>
+              <Text className="text-2xl font-bold text-[#4A3728]">$2.4K</Text>
+              <Text className="text-[#8D7B6D] text-sm mt-1">Revenue</Text>
             </View>
           </View>
         </View>
@@ -99,7 +99,7 @@ const Profile = () => {
         {menuItems.map((item) => (
           <Pressable
             key={item.id}
-            className="bg-white rounded-2xl p-4 mb-3 shadow-sm flex-row items-center"
+            className="bg-white/90 rounded-2xl p-4 mb-3 shadow-sm flex-row items-center border border-[#E0D7D0]"
           >
             <View
               className="w-12 h-12 rounded-full items-center justify-center"
@@ -107,10 +107,10 @@ const Profile = () => {
             >
               <item.icon size={24} color={item.color} />
             </View>
-            <Text className="flex-1 text-slate-900 font-semibold text-base ml-4">
+            <Text className="flex-1 text-[#4A3728] font-semibold text-base ml-4">
               {item.title}
             </Text>
-            <ChevronRight size={20} color="#94a3b8" />
+            <ChevronRight size={20} color="#8D7B6D" />
           </Pressable>
         ))}
       </View>
@@ -119,10 +119,12 @@ const Profile = () => {
       <View className="px-6 mt-4">
         <Pressable
           onPress={handleLogout}
-          className="bg-red-600 rounded-2xl p-4 flex-row items-center justify-center shadow-sm"
+          className="bg-[#8D534A] rounded-2xl p-4 flex-row items-center justify-center shadow-sm"
         >
-          <LogOut size={20} color="white" />
-          <Text className="text-white font-bold text-base ml-2">Logout</Text>
+          <LogOut size={20} color="#FDFBF7" />
+          <Text className="text-[#FDFBF7] font-bold text-base ml-2">
+            Logout
+          </Text>
         </Pressable>
       </View>
 

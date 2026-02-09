@@ -12,28 +12,28 @@ const Home = () => {
       title: "Active Orders",
       value: "12",
       icon: Clock,
-      color: "#3b82f6",
+      color: "#4A3728",
     },
     {
       id: 2,
       title: "Daily Revenue",
       value: "$1,234",
       icon: DollarSign,
-      color: "#10b981",
+      color: "#A6AE91",
     },
     {
       id: 3,
       title: "Total Customers",
       value: "156",
       icon: Users,
-      color: "#8b5cf6",
+      color: "#8D7B6D",
     },
     {
       id: 4,
       title: "Growth",
       value: "+23%",
       icon: TrendingUp,
-      color: "#f59e0b",
+      color: "#A69080",
     },
   ];
 
@@ -62,11 +62,11 @@ const Home = () => {
   ];
 
   return (
-    <ScrollView className="flex-1 bg-slate-50">
+    <ScrollView className="flex-1 bg-[#FDFBF7]">
       {/* Header */}
-      <View className="bg-blue-600 pt-12 pb-6 px-6 rounded-b-3xl">
-        <Text className="text-white text-3xl font-bold">Dashboard</Text>
-        <Text className="text-blue-100 mt-2">
+      <View className="bg-[#4A3728] pt-12 pb-6 px-6 rounded-b-3xl">
+        <Text className="text-[#FDFBF7] text-3xl font-bold">Dashboard</Text>
+        <Text className="text-[#E0D7D0] mt-2">
           Welcome back, {user?.email?.split("@")[0] || "Admin"}!
         </Text>
       </View>
@@ -77,7 +77,7 @@ const Home = () => {
           {stats.map((stat) => (
             <View
               key={stat.id}
-              className="bg-white rounded-2xl p-4 mb-4 shadow-sm"
+              className="bg-white/90 rounded-2xl p-4 mb-4 shadow-sm border border-[#E0D7D0]"
               style={{ width: "48%" }}
             >
               <View
@@ -86,10 +86,10 @@ const Home = () => {
               >
                 <stat.icon size={24} color={stat.color} />
               </View>
-              <Text className="text-2xl font-bold text-slate-900">
+              <Text className="text-2xl font-bold text-[#4A3728]">
                 {stat.value}
               </Text>
-              <Text className="text-slate-500 text-sm mt-1">{stat.title}</Text>
+              <Text className="text-[#8D7B6D] text-sm mt-1">{stat.title}</Text>
             </View>
           ))}
         </View>
@@ -98,25 +98,25 @@ const Home = () => {
       {/* Recent Orders */}
       <View className="px-6 mt-4">
         <View className="flex-row justify-between items-center mb-4">
-          <Text className="text-xl font-bold text-slate-900">
+          <Text className="text-xl font-bold text-[#4A3728]">
             Recent Orders
           </Text>
           <Pressable>
-            <Text className="text-blue-600 font-semibold">View All</Text>
+            <Text className="text-[#A6AE91] font-semibold">View All</Text>
           </Pressable>
         </View>
 
         {recentOrders.map((order) => (
           <View
             key={order.id}
-            className="bg-white rounded-2xl p-4 mb-3 shadow-sm"
+            className="bg-white/90 rounded-2xl p-4 mb-3 shadow-sm border border-[#E0D7D0]"
           >
             <View className="flex-row justify-between items-start mb-2">
               <View className="flex-1">
-                <Text className="text-slate-900 font-semibold text-base">
+                <Text className="text-[#4A3728] font-semibold text-base">
                   {order.customer}
                 </Text>
-                <Text className="text-slate-500 text-sm mt-1">
+                <Text className="text-[#8D7B6D] text-sm mt-1">
                   {order.items}
                 </Text>
               </View>
@@ -125,10 +125,10 @@ const Home = () => {
                 style={{
                   backgroundColor:
                     order.status === "Ready"
-                      ? "#dcfce7"
+                      ? "#D4E4D7"
                       : order.status === "Preparing"
-                        ? "#fef3c7"
-                        : "#e0e7ff",
+                        ? "#F5E6D3"
+                        : "#E0D7D0",
                 }}
               >
                 <Text
@@ -136,17 +136,17 @@ const Home = () => {
                   style={{
                     color:
                       order.status === "Ready"
-                        ? "#16a34a"
+                        ? "#2E5C2E"
                         : order.status === "Preparing"
-                          ? "#d97706"
-                          : "#4f46e5",
+                          ? "#8B5A00"
+                          : "#4A3728",
                   }}
                 >
                   {order.status}
                 </Text>
               </View>
             </View>
-            <Text className="text-slate-900 font-bold text-lg mt-2">
+            <Text className="text-[#4A3728] font-bold text-lg mt-2">
               {order.total}
             </Text>
           </View>

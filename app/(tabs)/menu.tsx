@@ -74,21 +74,22 @@ const Menu = () => {
   );
 
   return (
-    <View className="flex-1 bg-slate-50">
+    <View className="flex-1 bg-[#FDFBF7]">
       {/* Header */}
-      <View className="bg-blue-600 pt-12 pb-6 px-6 rounded-b-3xl">
-        <Text className="text-white text-3xl font-bold">Menu</Text>
-        <Text className="text-blue-100 mt-2">Manage your cafe items</Text>
+      <View className="bg-[#4A3728] pt-12 pb-6 px-6 rounded-b-3xl">
+        <Text className="text-[#FDFBF7] text-3xl font-bold">Menu</Text>
+        <Text className="text-[#E0D7D0] mt-2">Manage your cafe items</Text>
       </View>
 
       <ScrollView className="flex-1">
         {/* Search Bar */}
         <View className="px-6 mt-4">
-          <View className="flex-row items-center bg-white border border-slate-200 p-3 rounded-2xl">
-            <Search size={20} color="#64748b" />
+          <View className="flex-row items-center bg-white/90 border border-[#E0D7D0] p-3 rounded-2xl">
+            <Search size={20} color="#8D7B6D" />
             <TextInput
               placeholder="Search menu items..."
-              className="flex-1 ml-3 text-slate-800"
+              placeholderTextColor="#A69080"
+              className="flex-1 ml-3 text-[#4A3728]"
               value={searchQuery}
               onChangeText={setSearchQuery}
             />
@@ -106,14 +107,16 @@ const Menu = () => {
               key={category}
               onPress={() => setSelectedCategory(category)}
               className={`px-4 py-2 rounded-full mr-2 ${
-                selectedCategory === category ? "bg-blue-600" : "bg-white"
+                selectedCategory === category
+                  ? "bg-[#4A3728]"
+                  : "bg-white/90 border border-[#E0D7D0]"
               }`}
             >
               <Text
                 className={`font-semibold ${
                   selectedCategory === category
-                    ? "text-white"
-                    : "text-slate-600"
+                    ? "text-[#FDFBF7]"
+                    : "text-[#8D7B6D]"
                 }`}
               >
                 {category}
@@ -127,17 +130,17 @@ const Menu = () => {
           {filteredItems.map((item) => (
             <View
               key={item.id}
-              className="bg-white rounded-2xl p-4 mb-3 shadow-sm"
+              className="bg-white/90 rounded-2xl p-4 mb-3 shadow-sm border border-[#E0D7D0]"
             >
               <View className="flex-row justify-between items-start">
                 <View className="flex-1">
-                  <Text className="text-slate-900 font-bold text-lg">
+                  <Text className="text-[#4A3728] font-bold text-lg">
                     {item.name}
                   </Text>
-                  <Text className="text-slate-500 text-sm mt-1">
+                  <Text className="text-[#8D7B6D] text-sm mt-1">
                     {item.category}
                   </Text>
-                  <Text className="text-blue-600 font-bold text-xl mt-2">
+                  <Text className="text-[#A6AE91] font-bold text-xl mt-2">
                     {item.price}
                   </Text>
                 </View>
@@ -155,8 +158,8 @@ const Menu = () => {
                       {item.available ? "Available" : "Out of Stock"}
                     </Text>
                   </View>
-                  <Pressable className="mt-3 bg-blue-600 px-4 py-2 rounded-xl">
-                    <Text className="text-white font-semibold">Edit</Text>
+                  <Pressable className="mt-3 bg-[#4A3728] px-4 py-2 rounded-xl">
+                    <Text className="text-[#FDFBF7] font-semibold">Edit</Text>
                   </Pressable>
                 </View>
               </View>
@@ -168,8 +171,8 @@ const Menu = () => {
       </ScrollView>
 
       {/* Floating Add Button */}
-      <Pressable className="absolute bottom-6 right-6 bg-blue-600 w-16 h-16 rounded-full items-center justify-center shadow-lg">
-        <Plus size={28} color="white" />
+      <Pressable className="absolute bottom-6 right-6 bg-[#4A3728] w-16 h-16 rounded-full items-center justify-center shadow-lg">
+        <Plus size={28} color="#FDFBF7" />
       </Pressable>
     </View>
   );

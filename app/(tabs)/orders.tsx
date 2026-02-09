@@ -86,11 +86,11 @@ const Orders = () => {
   };
 
   return (
-    <View className="flex-1 bg-slate-50">
+    <View className="flex-1 bg-[#FDFBF7]">
       {/* Header */}
-      <View className="bg-blue-600 pt-12 pb-6 px-6 rounded-b-3xl">
-        <Text className="text-white text-3xl font-bold">Orders</Text>
-        <Text className="text-blue-100 mt-2">Track and manage orders</Text>
+      <View className="bg-[#4A3728] pt-12 pb-6 px-6 rounded-b-3xl">
+        <Text className="text-[#FDFBF7] text-3xl font-bold">Orders</Text>
+        <Text className="text-[#E0D7D0] mt-2">Track and manage orders</Text>
       </View>
 
       {/* Tabs */}
@@ -104,12 +104,14 @@ const Orders = () => {
             key={tab}
             onPress={() => setSelectedTab(tab)}
             className={`px-4 py-2 rounded-full mr-2 ${
-              selectedTab === tab ? "bg-blue-600" : "bg-white"
+              selectedTab === tab
+                ? "bg-[#4A3728]"
+                : "bg-white/90 border border-[#E0D7D0]"
             }`}
           >
             <Text
               className={`font-semibold ${
-                selectedTab === tab ? "text-white" : "text-slate-600"
+                selectedTab === tab ? "text-[#FDFBF7]" : "text-[#8D7B6D]"
               }`}
             >
               {tab}
@@ -125,14 +127,14 @@ const Orders = () => {
           return (
             <View
               key={order.id}
-              className="bg-white rounded-2xl p-4 mb-3 shadow-sm"
+              className="bg-white/90 rounded-2xl p-4 mb-3 shadow-sm border border-[#E0D7D0]"
             >
               <View className="flex-row justify-between items-start mb-3">
                 <View>
-                  <Text className="text-slate-900 font-bold text-lg">
+                  <Text className="text-[#4A3728] font-bold text-lg">
                     {order.id}
                   </Text>
-                  <Text className="text-slate-500 text-sm mt-1">
+                  <Text className="text-[#8D7B6D] text-sm mt-1">
                     {order.customer}
                   </Text>
                 </View>
@@ -152,30 +154,30 @@ const Orders = () => {
                 </View>
               </View>
 
-              <View className="border-t border-slate-100 pt-3">
+              <View className="border-t border-[#E0D7D0] pt-3">
                 {order.items.map((item, index) => (
-                  <Text key={index} className="text-slate-600 text-sm mb-1">
+                  <Text key={index} className="text-[#8D7B6D] text-sm mb-1">
                     • {item}
                   </Text>
                 ))}
               </View>
 
-              <View className="flex-row justify-between items-center mt-3 pt-3 border-t border-slate-100">
-                <Text className="text-slate-500 text-sm">{order.time}</Text>
-                <Text className="text-blue-600 font-bold text-lg">
+              <View className="flex-row justify-between items-center mt-3 pt-3 border-t border-[#E0D7D0]">
+                <Text className="text-[#8D7B6D] text-sm">{order.time}</Text>
+                <Text className="text-[#4A3728] font-bold text-lg">
                   {order.total}
                 </Text>
               </View>
 
               {order.status === "Preparing" && (
                 <View className="flex-row mt-3 space-x-2">
-                  <Pressable className="flex-1 bg-green-600 py-2 rounded-xl mr-2">
-                    <Text className="text-white text-center font-semibold">
+                  <Pressable className="flex-1 bg-[#A6AE91] py-2 rounded-xl mr-2">
+                    <Text className="text-[#FDFBF7] text-center font-semibold">
                       Mark Ready
                     </Text>
                   </Pressable>
-                  <Pressable className="flex-1 bg-red-600 py-2 rounded-xl">
-                    <Text className="text-white text-center font-semibold">
+                  <Pressable className="flex-1 bg-[#D32F2F] py-2 rounded-xl">
+                    <Text className="text-[#FDFBF7] text-center font-semibold">
                       Cancel
                     </Text>
                   </Pressable>
@@ -183,8 +185,8 @@ const Orders = () => {
               )}
 
               {order.status === "Ready" && (
-                <Pressable className="mt-3 bg-blue-600 py-2 rounded-xl">
-                  <Text className="text-white text-center font-semibold">
+                <Pressable className="mt-3 bg-[#4A3728] py-2 rounded-xl">
+                  <Text className="text-[#FDFBF7] text-center font-semibold">
                     Mark Delivered
                   </Text>
                 </Pressable>
