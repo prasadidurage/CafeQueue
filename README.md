@@ -1,50 +1,106 @@
-# Welcome to your Expo app 👋
+# 🍪 CafeQueue — Smart Cafe Management System ☕
 
-This is an [Expo](https://expo.dev) project created with [`create-expo-app`](https://www.npmjs.com/package/create-expo-app).
+![License](https://img.shields.io/badge/License-MIT-brown.svg)
+![React Native](https://img.shields.io/badge/React_Native-Expo-orange.svg)
+![Theme](https://img.shields.io/badge/Theme-Cookies_%26_Latte-lightbrown.svg)
 
-## Get started
+**CafeQueue** is a premium, aesthetic, and highly efficient mobile application designed to streamline cafe operations. From managing delicious cookie menus to tracking latte orders in real-time, it brings a "Warm Cafe" vibe to your management workflow.
 
-1. Install dependencies
+---
 
+## ✨ Features
+
+- **🎨 Aesthetic UI:** A warm "Cookies & Latte" theme (Light Brown & Cream) designed for eye comfort and premium feel.
+- **📦 Live Order Tracking:** Real-time updates for Pending, Ready, and Delivered orders.
+- **☕ Menu Management:** Easily manage your coffee, food, and bakery items with a beautiful grid layout.
+- **📊 Staff Dashboard:** Quick stats for daily orders, earnings, and performance at a glance.
+- **🔐 Secure Access:** Integrated authentication for staff and managers.
+
+---
+
+## 📸 Screen Previews
+
+| **Home / Dashboard** | **Menu Grid** | **Order Flow** |
+| :---: | :---: | :---: |
+| ![Home](https://via.placeholder.com/200x400?text=Home+UI) | ![Menu](https://via.placeholder.com/200x400?text=Menu+UI) | ![Orders](https://via.placeholder.com/200x400?text=Orders+UI) |
+> *Tip: Replace these placeholders with your actual app screenshots!*
+
+---
+
+## 🛠️ Tech Stack
+
+- **Framework:** [React Native](https://reactnative.dev/) with [Expo](https://expo.dev/)
+- **Styling:** [NativeWind](https://www.nativewind.dev/) (Tailwind CSS for React Native)
+- **Icons:** [Lucide React Native](https://lucide.dev/)
+- **Navigation:** Expo Router (File-based routing)
+
+---
+
+## 🚀 Getting Started
+
+To get a local copy up and running, follow these simple steps:
+
+### Prerequisites
+* npm or yarn
+* Expo Go app on your mobile (to test)
+
+### Installation
+
+1. **Clone the repository:**
    ```bash
-   npm install
-   ```
 
-2. Start the app
+Navigate to the project folder:
+    Bash
 
-   ```bash
-   npx expo start
-   ```
+    cd CafeQueue
 
-In the output, you'll find options to open the app in a
+    Install dependencies:
+    Bash
 
-- [development build](https://docs.expo.dev/develop/development-builds/introduction/)
-- [Android emulator](https://docs.expo.dev/workflow/android-studio-emulator/)
-- [iOS simulator](https://docs.expo.dev/workflow/ios-simulator/)
-- [Expo Go](https://expo.dev/go), a limited sandbox for trying out app development with Expo
+    npm install
+    # or
+    yarn install
 
-You can start developing by editing the files inside the **app** directory. This project uses [file-based routing](https://docs.expo.dev/router/introduction).
+    Start the development server:
+    Bash
 
-## Get a fresh project
+    npx expo start
 
-When you're ready, run:
+📂 Project Structure
+Plaintext
 
-```bash
-npm run reset-project
-```
+CafeQueue/
+├── app/                # Main app screens & navigation (Expo Router)
+├── components/         # Reusable UI components (Buttons, Cards, etc.)
+├── services/           # API & Auth services
+├── hooks/              # Custom React hooks
+├── assets/             # Images, Fonts, and Cafe Icons
+└── tailwind.config.js  # Theme & Color configuration
 
-This command will move the starter code to the **app-example** directory and create a blank **app** directory where you can start developing.
+🤝 Contributing
 
-## Learn more
+Contributions are what make the open-source community such an amazing place to learn, inspire, and create. Any contributions you make are greatly appreciated.
 
-To learn more about developing your project with Expo, look at the following resources:
+    Fork the Project
 
-- [Expo documentation](https://docs.expo.dev/): Learn fundamentals, or go into advanced topics with our [guides](https://docs.expo.dev/guides).
-- [Learn Expo tutorial](https://docs.expo.dev/tutorial/introduction/): Follow a step-by-step tutorial where you'll create a project that runs on Android, iOS, and the web.
+    Create your Feature Branch (git checkout -b feature/AmazingFeature)
 
-## Join the community
+    Commit your Changes (git commit -m 'Add some AmazingFeature')
 
-Join our community of developers creating universal apps.
+    Push to the Branch (git push origin feature/AmazingFeature)
 
-- [Expo on GitHub](https://github.com/expo/expo): View our open source platform and contribute.
-- [Discord community](https://chat.expo.dev): Chat with Expo users and ask questions.
+    Open a Pull Request
+
+📜 License
+
+Distributed under the MIT License. See LICENSE for more information.
+☕ Support
+
+If you like this project, feel free to give it a ⭐ on GitHub!
+
+Developed with ❤️ by Prasadi Durage
+
+
+
+   
+   git clone [https://github.com/prasadidurage/CafeQueue.git](https://github.com/prasadidurage/CafeQueue.git)
