@@ -2,7 +2,10 @@ import { Circle, Coffee, Dessert, Edit3, Leaf, Plus, Sandwich, Search, X } from 
 import React, { useState } from "react";
 import { Alert, Modal, Pressable, ScrollView, Text, TextInput, TouchableOpacity, View } from "react-native";
 
+import { useMenu } from "@/context/MenuContext";
+
 const Menu = () => {
+  const { menuItems, addMenuItem, updateMenuItem, toggleStock } = useMenu();
   const [searchQuery, setSearchQuery] = useState("");
   const [selectedCategory, setSelectedCategory] = useState("All");
   const [modalVisible, setModalVisible] = useState(false);
@@ -13,17 +16,7 @@ const Menu = () => {
   const [newItemCategory, setNewItemCategory] = useState("Coffee");
   const [newItemAvailable, setNewItemAvailable] = useState(true);
 
-  const [menuItems, setMenuItems] = useState([
-    { id: 1, name: "Espresso", category: "Coffee", price: "$3.50", available: true },
-    { id: 2, name: "Cappuccino", category: "Coffee", price: "$4.50", available: true },
-    { id: 3, name: "Latte", category: "Coffee", price: "$4.00", available: true },
-    { id: 4, name: "Club Sandwich", category: "Food", price: "$8.50", available: true },
-    { id: 5, name: "Caesar Salad", category: "Food", price: "$7.00", available: false },
-    { id: 6, name: "Blueberry Muffin", category: "Bakery", price: "$3.00", available: true },
-    { id: 7, name: "Croissant", category: "Bakery", price: "$3.50", available: true },
-    { id: 8, name: "Green Tea", category: "Tea", price: "$2.50", available: true },
-  ]);
-
+  // Categories remain constant
   const categories = [
     { name: "All", icon: Circle },
     { name: "Coffee", icon: Coffee },
@@ -37,6 +30,7 @@ const Menu = () => {
       (selectedCategory === "All" || item.category === selectedCategory) &&
       item.name.toLowerCase().includes(searchQuery.toLowerCase()),
   );
+
   /* --- State for Editing --- */
   const [editingItemId, setEditingItemId] = useState<number | null>(null);
 
@@ -58,22 +52,24 @@ const Menu = () => {
     const priceFormatted = newItemPrice.startsWith('$') ? newItemPrice : `$${newItemPrice}`;
 
     if (editingItemId) {
-      // Update existing item
-      setMenuItems(menuItems.map(item =>
-        item.id === editingItemId
-          ? { ...item, name: newItemName, price: priceFormatted, category: newItemCategory, available: newItemAvailable }
-          : item
-      ));
+      // Update existing item via Context
+      updateMenuItem({
+        id: editingItemId,
+        name: newItemName,
+        price: priceFormatted,
+        category: newItemCategory,
+        available: newItemAvailable
+      });
     } else {
-      // Add new item
+      // Add new item via Context
       const newItem = {
-        id: menuItems.length + 1,
+        id: Date.now(), // Simple unique ID generation
         name: newItemName,
         category: newItemCategory,
         price: priceFormatted,
         available: newItemAvailable,
       };
-      setMenuItems([...menuItems, newItem]);
+      addMenuItem(newItem);
     }
 
     closeModal();

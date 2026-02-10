@@ -1,5 +1,6 @@
 import { AuthProvider } from "@/context/AuthContext";
 import { LoaderProvider } from "@/context/LoaderContext";
+import { MenuProvider } from "@/context/MenuContext";
 import { OrderProvider } from "@/context/OrderContext";
 import { Slot } from "expo-router";
 import React from "react";
@@ -19,10 +20,12 @@ const RootLayout = () => {
     <LoaderProvider>
       <AuthProvider>
         <OrderProvider>
-          <View className="flex-1" style={{ marginTop: insets.top }}>
-            {/* Slot renders the currently active screen */}
-            <Slot />
-          </View>
+          <MenuProvider>
+            <View className="flex-1" style={{ marginTop: insets.top }}>
+              {/* Slot renders the currently active screen */}
+              <Slot />
+            </View>
+          </MenuProvider>
         </OrderProvider>
       </AuthProvider>
     </LoaderProvider>

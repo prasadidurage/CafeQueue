@@ -54,12 +54,10 @@ const TabBar = ({ state, descriptors, navigation }: BottomTabBarProps) => {
 
                     const onPress = () => {
                         tabPositionX.value = withSpring(buttonWidth * index, {
-                            duration: 1500,
-                            dampingRatio: 0.5,
-                            stiffness: 100,
+                            stiffness: 150,
+                            damping: 18,
+                            mass: 1,
                             overshootClamping: false,
-                            restDisplacementThreshold: 0.01,
-                            restSpeedThreshold: 2,
                         });
 
                         const event = navigation.emit({
@@ -98,7 +96,6 @@ const TabBar = ({ state, descriptors, navigation }: BottomTabBarProps) => {
                             accessibilityRole="button"
                             accessibilityState={isFocused ? { selected: true } : {}}
                             accessibilityLabel={options.tabBarAccessibilityLabel}
-                            testID={options.tabBarTestID}
                             onPress={onPress}
                             onLongPress={onLongPress}
                             key={route.key}

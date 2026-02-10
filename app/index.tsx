@@ -8,8 +8,8 @@ const Index = () => {
   const { user, isLoading } = useAuth();
   if (isLoading) {
     return (
-      <View className="flex-1 justify-center items-center bg-gray-50">
-        <ActivityIndicator size="large" color="#4ade80" />
+      <View className="flex-1 justify-center items-center bg-[#F9F5F0]">
+        <ActivityIndicator size="large" color="#D4A373" />
       </View>
     );
   }

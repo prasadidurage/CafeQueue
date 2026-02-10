@@ -1,7 +1,8 @@
 import { useAuth } from "@/hooks/useAuth";
 import { CheckCircle2, Clock, DollarSign, ShoppingBag, TrendingUp, User } from "lucide-react-native";
 import React from "react";
-import { Dimensions, Pressable, ScrollView, StatusBar, Text, View } from "react-native";
+import { Dimensions, Image, Pressable, ScrollView, StatusBar, Text, View } from "react-native";
+import Animated, { FadeIn, FadeOut } from "react-native-reanimated";
 import { SafeAreaView } from "react-native-safe-area-context";
 
 const { width } = Dimensions.get('window');
@@ -34,6 +35,74 @@ const Home = () => {
     }
   }
 
+  const getGreeting = () => {
+    const hour = new Date().getHours();
+    if (hour < 12) return "Good Morning";
+    if (hour < 18) return "Good Afternoon";
+    return "Good Evening";
+  };
+
+  /* --- Slideshow Logic --- */
+  const slideshowImages = [
+    {
+      id: 1,
+      uri: "https://images.unsplash.com/photo-1558961363-fa8fdf82db35?q=80&w=1965&auto=format&fit=crop",
+      title: "Cozy Vibes",
+      subtitle: "Grab a cookie with your coffee"
+    },
+    {
+      id: 2,
+      uri: "https://images.unsplash.com/photo-1514432324607-a09d9b4aefdd?q=80&w=1887&auto=format&fit=crop",
+      title: "Latte Art",
+      subtitle: "Handcrafted with passion"
+    },
+    {
+      id: 3,
+      uri: "https://images.unsplash.com/photo-1483695028939-5bb13f86d8b0?q=80&w=2074&auto=format&fit=crop",
+      title: "Fresh Pastries",
+      subtitle: "Baked fresh every morning"
+    },
+    {
+      id: 4,
+      uri: "https://images.unsplash.com/photo-1495474472287-4d71bcdd2085?q=80&w=2070&auto=format&fit=crop",
+      title: "Premium Beans",
+      subtitle: "Sourced from the best farms"
+    },
+  ];
+
+  const Slideshow = () => {
+    const [index, setIndex] = React.useState(0);
+
+    React.useEffect(() => {
+      const interval = setInterval(() => {
+        setIndex((prevIndex) => (prevIndex + 1) % slideshowImages.length);
+      }, 5000); // Change every 5 seconds
+      return () => clearInterval(interval);
+    }, []);
+
+    const currentImage = slideshowImages[index];
+
+    return (
+      <Animated.View
+        key={currentImage.id}
+        entering={FadeIn.duration(1000)}
+        exiting={FadeOut.duration(1000)}
+        style={{ flex: 1 }}
+      >
+        <Image
+          source={{ uri: currentImage.uri }}
+          className="w-full h-full"
+          resizeMode="cover"
+        />
+        <View className="absolute inset-0 bg-black/20" />
+        <View className="absolute bottom-4 left-4">
+          <Text className="text-white font-black text-xl">{currentImage.title}</Text>
+          <Text className="text-white/90 text-xs font-medium">{currentImage.subtitle}</Text>
+        </View>
+      </Animated.View>
+    );
+  };
+
   return (
     <View className="flex-1 bg-[#F9F5F0]">
       <StatusBar barStyle="light-content" />
@@ -50,7 +119,7 @@ const Home = () => {
               <View>
                 <Text className="text-[#D4A373] font-bold tracking-widest text-xs uppercase mb-1">Cafe Manager</Text>
                 <Text className="text-white text-3xl font-black leading-9">
-                  Good Morning,{'\n'}
+                  {getGreeting()},{'\n'}
                   <Text className="text-[#D4A373]">{user?.email?.split('@')[0] || 'Barista'}</Text>
                 </Text>
               </View>
@@ -95,7 +164,12 @@ const Home = () => {
             </View>
           </View>
 
-          {/* Quick Actions Removed */}
+          {/* Decorative Image Banner (Slideshow) */}
+          <View className="px-6 mb-8">
+            <View className="rounded-[30px] overflow-hidden shadow-lg shadow-[#4A3728]/20 h-40 relative">
+              <Slideshow />
+            </View>
+          </View>
 
           {/* Recent Orders List */}
           <View className="px-6">
