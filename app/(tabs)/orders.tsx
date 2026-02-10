@@ -1,17 +1,26 @@
-import { CheckCircle, ChevronRight, Clock, Coffee, Package, XCircle } from "lucide-react-native";
+import { useOrders } from "@/context/OrderContext";
+import { CheckCircle, ChevronRight, Clock, Coffee, Package, Plus, Trash2, XCircle } from "lucide-react-native";
 import React, { useState } from "react";
-import { Pressable, ScrollView, StatusBar, Text, View } from "react-native";
+import { Alert, Modal, Pressable, ScrollView, StatusBar, Text, TextInput, TouchableOpacity, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 
 const Orders = () => {
+  const { orders, addOrder, updateOrderStatus } = useOrders();
   const [selectedTab, setSelectedTab] = useState("All");
+  const [modalVisible, setModalVisible] = useState(false);
 
-  const orders = [
-    { id: "001", customer: "John Doe", items: ["2x Espresso", "1x Croissant"], total: "$10.50", status: "Preparing", time: "5m" },
-    { id: "002", customer: "Jane Smith", items: ["1x Latte", "1x Club Sandwich"], total: "$12.50", status: "Ready", time: "10m" },
-    { id: "003", customer: "Mike Johnson", items: ["3x Cappuccino"], total: "$13.50", status: "Delivered", time: "25m" },
-    { id: "004", customer: "Sarah Williams", items: ["1x Green Tea", "2x Muffin"], total: "$8.50", status: "Cancelled", time: "30m" },
-    { id: "005", customer: "David Brown", items: ["2x Latte", "1x Caesar Salad"], total: "$15.00", status: "Preparing", time: "2m" },
+  // New Order State
+  const [customerName, setCustomerName] = useState("");
+  const [selectedItems, setSelectedItems] = useState<{ id: string, name: string, price: number, qty: number }[]>([]);
+
+  // Mock Data for Menu Items Selector
+  const menuOptions = [
+    { id: "m1", name: "Espresso", price: 3.50 },
+    { id: "m2", name: "Cappuccino", price: 4.50 },
+    { id: "m3", name: "Iced Latte", price: 5.00 },
+    { id: "m4", name: "Croissant", price: 3.00 },
+    { id: "m5", name: "Bagel", price: 2.50 },
+    { id: "m6", name: "Green Tea", price: 3.00 },
   ];
 
   const tabs = ["All", "Preparing", "Ready", "Delivered", "Cancelled"];
@@ -29,6 +38,51 @@ const Orders = () => {
       case "Cancelled": return { bg: "#FEF2F2", text: "#B91C1C", border: "#FECACA", icon: XCircle };
       default: return { bg: "#F9FAFB", text: "#374151", border: "#E5E7EB", icon: Clock };
     }
+  };
+
+  // --- Add Order Logic ---
+  const addItemToOrder = (item: { id: string, name: string, price: number }) => {
+    setSelectedItems(prev => {
+      const existing = prev.find(i => i.id === item.id);
+      if (existing) {
+        return prev.map(i => i.id === item.id ? { ...i, qty: i.qty + 1 } : i);
+      }
+      return [...prev, { ...item, qty: 1 }];
+    });
+  };
+
+  const removeItemFromOrder = (id: string) => {
+    setSelectedItems(prev => prev.filter(i => i.id !== id));
+  };
+
+  const calculateTotal = () => {
+    return selectedItems.reduce((acc, item) => acc + (item.price * item.qty), 0).toFixed(2);
+  };
+
+  const handleCreateOrder = () => {
+    if (!customerName.trim()) {
+      Alert.alert("Required", "Please enter customer name");
+      return;
+    }
+    if (selectedItems.length === 0) {
+      Alert.alert("Required", "Please select at least one item");
+      return;
+    }
+
+    const newOrderObj = {
+      id: String(orders.length + 1).padStart(3, '0'),
+      customer: customerName,
+      items: selectedItems.map(i => `${i.qty}x ${i.name}`),
+      total: `$${calculateTotal()}`,
+      status: "Preparing" as const,
+      time: "Just now"
+    };
+
+    addOrder(newOrderObj);
+    setModalVisible(false);
+    setCustomerName("");
+    setSelectedItems([]);
+    Alert.alert("Success", "Order sent to kitchen!");
   };
 
   return (
@@ -53,8 +107,8 @@ const Orders = () => {
                 key={tab}
                 onPress={() => setSelectedTab(tab)}
                 className={`mr-3 px-5 py-2.5 rounded-full border ${selectedTab === tab
-                    ? "bg-[#D4A373] border-[#D4A373]"
-                    : "bg-[#4A3728] border-[#5C4535]"
+                  ? "bg-[#D4A373] border-[#D4A373]"
+                  : "bg-[#4A3728] border-[#5C4535]"
                   }`}
               >
                 <Text className={`font-bold text-xs ${selectedTab === tab ? "text-[#2C1E11]" : "text-[#D4A373]"}`}>
@@ -92,7 +146,7 @@ const Orders = () => {
                         <View className="bg-[#2C1E11] px-2 py-1 rounded-md mr-2">
                           <Text className="text-[#D4A373] font-black text-xs">#{order.id}</Text>
                         </View>
-                        <Text className="text-[#9CA3AF] text-xs font-semibold">{order.time} ago</Text>
+                        <Text className="text-[#9CA3AF] text-xs font-semibold">{order.time}</Text>
                       </View>
 
                       <View style={{ backgroundColor: config.bg, borderColor: config.border }} className="flex-row items-center px-2.5 py-1 rounded-lg border">
@@ -124,12 +178,18 @@ const Orders = () => {
                       <Text className="text-[#2C1E11] text-lg font-black">{order.total}</Text>
 
                       {order.status === 'Preparing' && (
-                        <Pressable className="bg-[#2C1E11] px-5 py-2.5 rounded-xl shadow-md active:opacity-90">
+                        <Pressable
+                          onPress={() => updateOrderStatus(order.id, 'Ready')}
+                          className="bg-[#2C1E11] px-5 py-2.5 rounded-xl shadow-md active:opacity-90"
+                        >
                           <Text className="text-[#D4A373] font-bold text-xs uppercase">Mark Ready</Text>
                         </Pressable>
                       )}
                       {order.status === 'Ready' && (
-                        <Pressable className="bg-[#059669] px-5 py-2.5 rounded-xl shadow-md active:opacity-90 flex-row items-center">
+                        <Pressable
+                          onPress={() => updateOrderStatus(order.id, 'Delivered')}
+                          className="bg-[#059669] px-5 py-2.5 rounded-xl shadow-md active:opacity-90 flex-row items-center"
+                        >
                           <Text className="text-white font-bold text-xs uppercase mr-1">Complete</Text>
                           <ChevronRight size={14} color="white" />
                         </Pressable>
@@ -141,6 +201,109 @@ const Orders = () => {
             })
           )}
         </ScrollView>
+
+        {/* --- Floating Action Button (Add Order) --- */}
+        <Pressable
+          onPress={() => setModalVisible(true)}
+          className="absolute bottom-8 right-8 w-16 h-16 bg-[#2C1E11] rounded-full items-center justify-center shadow-xl shadow-[#2C1E11]/40 border-4 border-white"
+        >
+          <Plus size={32} color="#D4A373" strokeWidth={3} />
+        </Pressable>
+
+        {/* --- Add Order Modal --- */}
+        <Modal
+          animationType="slide"
+          transparent={true}
+          visible={modalVisible}
+          onRequestClose={() => setModalVisible(false)}
+        >
+          <View className="flex-1 justify-end bg-black/50">
+            <View className="bg-[#FDFBF7] h-[85%] rounded-t-[30px] p-6 shadow-2xl">
+              {/* Modal Header */}
+              <View className="flex-row justify-between items-center mb-6">
+                <View>
+                  <Text className="text-[#D4A373] text-xs font-bold uppercase tracking-widest">Walk-In Customer</Text>
+                  <Text className="text-[#2C1E11] text-2xl font-black">New Order</Text>
+                </View>
+                <TouchableOpacity onPress={() => setModalVisible(false)} className="bg-[#F3F4F6] p-2 rounded-full">
+                  <XCircle size={24} color="#9CA3AF" />
+                </TouchableOpacity>
+              </View>
+
+              <ScrollView showsVerticalScrollIndicator={false}>
+                {/* Customer Name */}
+                <Text className="text-[#4B5563] font-bold mb-2">Customer Name</Text>
+                <TextInput
+                  value={customerName}
+                  onChangeText={setCustomerName}
+                  placeholder="Ex: Guest #12"
+                  className="bg-white border border-[#E5E7EB] p-4 rounded-xl text-[#2C1E11] font-semibold mb-6"
+                />
+
+                {/* Menu Selection */}
+                <Text className="text-[#4B5563] font-bold mb-3">Select Items</Text>
+                <View className="flex-row flex-wrap justify-between mb-6">
+                  {menuOptions.map((item) => (
+                    <TouchableOpacity
+                      key={item.id}
+                      onPress={() => addItemToOrder(item)}
+                      className="w-[48%] bg-white p-3 rounded-xl border border-[#E5E7EB] mb-3 flex-row justify-between items-center shadow-sm"
+                    >
+                      <View>
+                        <Text className="text-[#2C1E11] font-bold">{item.name}</Text>
+                        <Text className="text-[#D4A373] font-bold text-xs">${item.price.toFixed(2)}</Text>
+                      </View>
+                      <View className="bg-[#F3F4F6] p-1.5 rounded-lg">
+                        <Plus size={16} color="#4B5563" />
+                      </View>
+                    </TouchableOpacity>
+                  ))}
+                </View>
+
+                {/* Cart/Selected Items */}
+                <Text className="text-[#4B5563] font-bold mb-3">Current Cart</Text>
+                {selectedItems.length === 0 ? (
+                  <View className="bg-[#F9FAFB] p-6 rounded-xl items-center border border-dashed border-[#D1D5DB] mb-6">
+                    <Text className="text-[#9CA3AF] font-medium">No items selected</Text>
+                  </View>
+                ) : (
+                  <View className="bg-white rounded-xl border border-[#E5E7EB] mb-6 overflow-hidden">
+                    {selectedItems.map((item, idx) => (
+                      <View key={idx} className="flex-row justify-between items-center p-4 border-b border-[#F3F4F6]">
+                        <View className="flex-row items-center">
+                          <View className="bg-[#2C1E11] w-6 h-6 rounded-full items-center justify-center mr-3">
+                            <Text className="text-[#D4A373] text-xs font-bold">{item.qty}</Text>
+                          </View>
+                          <Text className="text-[#2C1E11] font-medium">{item.name}</Text>
+                        </View>
+                        <View className="flex-row items-center">
+                          <Text className="text-[#4B5563] font-bold mr-4">${(item.price * item.qty).toFixed(2)}</Text>
+                          <TouchableOpacity onPress={() => removeItemFromOrder(item.id)}>
+                            <Trash2 size={18} color="#EF4444" />
+                          </TouchableOpacity>
+                        </View>
+                      </View>
+                    ))}
+                    <View className="bg-[#F9FAFB] p-4 flex-row justify-between items-center">
+                      <Text className="text-[#4B5563] font-bold uppercase text-xs">Total Amount</Text>
+                      <Text className="text-[#2C1E11] font-black text-xl">${calculateTotal()}</Text>
+                    </View>
+                  </View>
+                )}
+              </ScrollView>
+
+              {/* Submit Button */}
+              <TouchableOpacity
+                onPress={handleCreateOrder}
+                className="bg-[#2C1E11] p-5 rounded-2xl shadow-lg shadow-[#2C1E11]/30 mt-4 items-center flex-row justify-center"
+              >
+                <Text className="text-white font-bold text-lg mr-2">Create Ticket</Text>
+                <CheckCircle size={20} color="#D4A373" />
+              </TouchableOpacity>
+            </View>
+          </View>
+        </Modal>
+
       </SafeAreaView>
     </View>
   );

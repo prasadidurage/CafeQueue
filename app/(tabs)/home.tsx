@@ -1,5 +1,5 @@
 import { useAuth } from "@/hooks/useAuth";
-import { CheckCircle2, Clock, DollarSign, Plus, ShoppingBag, TrendingUp, User } from "lucide-react-native";
+import { CheckCircle2, Clock, DollarSign, ShoppingBag, TrendingUp, User } from "lucide-react-native";
 import React from "react";
 import { Dimensions, Pressable, ScrollView, StatusBar, Text, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
@@ -95,21 +95,7 @@ const Home = () => {
             </View>
           </View>
 
-          {/* Quick Actions Banner */}
-          <View className="px-6 mb-8">
-            <View className="bg-[#D4A373] rounded-[30px] p-6 flex-row items-center justify-between shadow-xl shadow-[#D4A373]/30 relative overflow-hidden">
-              {/* Decorative Circle */}
-              <View className="absolute -right-4 -bottom-10 w-32 h-32 bg-white/20 rounded-full" />
-
-              <View>
-                <Text className="text-[#2C1E11] text-lg font-black">New Order?</Text>
-                <Text className="text-[#2C1E11]/80 text-xs font-medium mt-1">Create a new order instantly</Text>
-              </View>
-              <Pressable className="bg-[#2C1E11] w-12 h-12 rounded-full items-center justify-center shadow-lg">
-                <Plus size={24} color="#FFF" />
-              </Pressable>
-            </View>
-          </View>
+          {/* Quick Actions Removed */}
 
           {/* Recent Orders List */}
           <View className="px-6">

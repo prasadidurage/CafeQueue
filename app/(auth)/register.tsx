@@ -1,18 +1,19 @@
-import React, { useState } from "react";
-import { 
-  View, 
-  Text, 
-  TextInput, 
-  Pressable, 
-  TouchableWithoutFeedback, 
-  Keyboard, 
-  SafeAreaView, 
-  Alert 
-} from "react-native";
-import { useRouter } from "expo-router";
-import { User, Mail, Lock, UserPlus, ChevronLeft } from "lucide-react-native";
-import { registerUser } from "@/services/authService";
 import { useLoader } from "@/hooks/useLoader";
+import { registerUser } from "@/services/authService";
+import { useRouter } from "expo-router";
+import { ChevronLeft, Lock, Mail, User, UserPlus } from "lucide-react-native";
+import React, { useState } from "react";
+import {
+  Alert,
+  Keyboard,
+  Pressable,
+  SafeAreaView,
+  Text,
+  TextInput,
+  TouchableWithoutFeedback,
+  View
+} from "react-native";
+import Animated, { FadeInDown, FadeInUp } from 'react-native-reanimated';
 
 const Register = () => {
   const router = useRouter();
@@ -25,7 +26,7 @@ const Register = () => {
 
   const handleRegister = async () => {
     if (isLoading) return;
-    
+
     if (!name || !email || !password || !conPassword) {
       Alert.alert("Error", "Please fill all fields...!");
       return;
@@ -51,12 +52,12 @@ const Register = () => {
     <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
       <SafeAreaView className="flex-1 bg-[#FDFBF7]">
         {/* Background Decorative Circles */}
-        <View className="absolute -top-20 -right-20 w-64 h-64 bg-[#A6AE91] rounded-full opacity-20 blur-3xl" />
-        <View className="absolute bottom-20 -left-20 w-72 h-72 bg-[#D7CCC8] rounded-full opacity-30 blur-3xl" />
+        <Animated.View entering={FadeInUp.delay(200).duration(1000).springify()} className="absolute -top-20 -right-20 w-64 h-64 bg-[#A6AE91] rounded-full opacity-20 blur-3xl" />
+        <Animated.View entering={FadeInDown.delay(200).duration(1000).springify()} className="absolute bottom-20 -left-20 w-72 h-72 bg-[#D7CCC8] rounded-full opacity-30 blur-3xl" />
 
         <View className="flex-1 justify-center px-8">
           {/* Header */}
-          <View className="items-center mb-10">
+          <Animated.View entering={FadeInDown.delay(100).duration(1000).springify()} className="items-center mb-10">
             <View className="bg-[#A6AE91] p-5 rounded-[30px] mb-5 shadow-lg shadow-[#A6AE91]/40">
               <UserPlus color="#FDFBF7" size={38} strokeWidth={1.5} />
             </View>
@@ -66,12 +67,12 @@ const Register = () => {
             <Text className="text-[#6D5D50] mt-2 font-medium tracking-wide text-center">
               CREATE YOUR STAFF ACCOUNT
             </Text>
-          </View>
+          </Animated.View>
 
           {/* Form Fields */}
           <View className="space-y-4">
             {/* Name Input */}
-            <View className="bg-white/80 border border-[#E0D7D0] flex-row items-center p-4 rounded-2xl shadow-sm">
+            <Animated.View entering={FadeInDown.delay(200).duration(1000).springify()} className="bg-white/80 border border-[#E0D7D0] flex-row items-center p-4 rounded-2xl shadow-sm">
               <User size={20} color="#8D7B6D" />
               <TextInput
                 placeholder="Full Name"
@@ -80,10 +81,10 @@ const Register = () => {
                 value={name}
                 onChangeText={setName}
               />
-            </View>
+            </Animated.View>
 
             {/* Email Input */}
-            <View className="bg-white/80 border border-[#E0D7D0] flex-row items-center p-4 rounded-2xl shadow-sm mt-3">
+            <Animated.View entering={FadeInDown.delay(300).duration(1000).springify()} className="bg-white/80 border border-[#E0D7D0] flex-row items-center p-4 rounded-2xl shadow-sm mt-3">
               <Mail size={20} color="#8D7B6D" />
               <TextInput
                 placeholder="Email Address"
@@ -93,10 +94,10 @@ const Register = () => {
                 onChangeText={setEmail}
                 autoCapitalize="none"
               />
-            </View>
+            </Animated.View>
 
             {/* Password Input */}
-            <View className="bg-white/80 border border-[#E0D7D0] flex-row items-center p-4 rounded-2xl shadow-sm mt-3">
+            <Animated.View entering={FadeInDown.delay(400).duration(1000).springify()} className="bg-white/80 border border-[#E0D7D0] flex-row items-center p-4 rounded-2xl shadow-sm mt-3">
               <Lock size={20} color="#8D7B6D" />
               <TextInput
                 placeholder="Password"
@@ -106,10 +107,10 @@ const Register = () => {
                 value={password}
                 onChangeText={setPassword}
               />
-            </View>
+            </Animated.View>
 
             {/* Confirm Password */}
-            <View className="bg-white/80 border border-[#E0D7D0] flex-row items-center p-4 rounded-2xl shadow-sm mt-3">
+            <Animated.View entering={FadeInDown.delay(500).duration(1000).springify()} className="bg-white/80 border border-[#E0D7D0] flex-row items-center p-4 rounded-2xl shadow-sm mt-3">
               <Lock size={20} color="#8D7B6D" />
               <TextInput
                 placeholder="Confirm Password"
@@ -119,38 +120,42 @@ const Register = () => {
                 value={conPassword}
                 onChangeText={setConPassword}
               />
-            </View>
+            </Animated.View>
 
             {/* Register Button */}
-            <Pressable 
-              onPress={handleRegister}
-              disabled={isLoading}
-              style={({ pressed }) => [{ opacity: (pressed || isLoading) ? 0.8 : 1 }]}
-              className="bg-[#4A3728] p-5 rounded-2xl shadow-xl shadow-[#4A3728]/30 mt-8"
-            >
-              <Text className="text-[#FDFBF7] text-center font-bold text-lg">
-                {isLoading ? "Creating Account..." : "Create Account"}
-              </Text>
-            </Pressable>
+            <Animated.View entering={FadeInDown.delay(600).duration(1000).springify()}>
+              <Pressable
+                onPress={handleRegister}
+                disabled={isLoading}
+                style={({ pressed }) => [{ opacity: (pressed || isLoading) ? 0.8 : 1 }]}
+                className="bg-[#4A3728] p-5 rounded-2xl shadow-xl shadow-[#4A3728]/30 mt-8"
+              >
+                <Text className="text-[#FDFBF7] text-center font-bold text-lg">
+                  {isLoading ? "Creating Account..." : "Create Account"}
+                </Text>
+              </Pressable>
+            </Animated.View>
 
             {/* Login Link */}
-            <Pressable 
-              onPress={() => router.back()}
-              className="flex-row justify-center items-center mt-8"
-            >
-              <ChevronLeft size={18} color="#8D7B6D" />
-              <Text className="text-[#8D7B6D] ml-1">Already have an account? </Text>
-              <Text className="text-[#A6AE91] font-bold underline">Login</Text>
-            </Pressable>
+            <Animated.View entering={FadeInDown.delay(700).duration(1000).springify()}>
+              <Pressable
+                onPress={() => router.back()}
+                className="flex-row justify-center items-center mt-8"
+              >
+                <ChevronLeft size={18} color="#8D7B6D" />
+                <Text className="text-[#8D7B6D] ml-1">Already have an account? </Text>
+                <Text className="text-[#A6AE91] font-bold underline">Login</Text>
+              </Pressable>
+            </Animated.View>
           </View>
         </View>
 
         {/* Brand Label */}
-        <View className="items-center pb-8">
+        <Animated.View entering={FadeInDown.delay(800).duration(1000).springify()} className="items-center pb-8">
           <Text className="text-[#D7CCC8] font-semibold text-xs tracking-[2px]">
             CAFEQUEUE STAFF PORTAL
           </Text>
-        </View>
+        </Animated.View>
       </SafeAreaView>
     </TouchableWithoutFeedback>
   );
