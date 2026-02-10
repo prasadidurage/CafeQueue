@@ -1,9 +1,9 @@
-import { View, Text } from "react-native"
-import React from "react"
-import { Slot } from "expo-router"
-import { SafeAreaView, useSafeAreaInsets } from "react-native-safe-area-context"
-import { LoaderProvider } from "@/context/LoaderContext"
-import { AuthProvider } from "@/context/AuthContext"
+import { AuthProvider } from "@/context/AuthContext";
+import { LoaderProvider } from "@/context/LoaderContext";
+import { Slot } from "expo-router";
+import React from "react";
+import { View } from "react-native";
+import { useSafeAreaInsets } from "react-native-safe-area-context";
 
 // SafeAreaView from react-native is deprecated
 // react-native-safe-area-context is the recommended alternative
@@ -11,9 +11,9 @@ import { AuthProvider } from "@/context/AuthContext"
 
 // Like App.tsx
 const RootLayout = () => {
-  const insets = useSafeAreaInsets()
+  const insets = useSafeAreaInsets();
   // / device safe area values (top, left, right, and bottom)
-  console.log(insets)
+  console.log(insets);
   return (
     <LoaderProvider>
       <AuthProvider>
@@ -27,7 +27,7 @@ const RootLayout = () => {
     // {/* Slot renders the currently active screen */}
     // <Slot />
     // </SafeAreaView>
-  )
-}
+  );
+};
 
-export default RootLayout
+export default RootLayout;

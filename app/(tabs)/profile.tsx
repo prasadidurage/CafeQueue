@@ -11,17 +11,19 @@ import {
     Shield,
     Store,
     User,
+    Award,
+    Coffee
 } from "lucide-react-native";
 import React from "react";
-import { Alert, Pressable, ScrollView, Text, View } from "react-native";
+import { Alert, Pressable, ScrollView, Text, View, StatusBar } from "react-native";
 
 const Profile = () => {
   const { user } = useAuth();
   const router = useRouter();
 
   const handleLogout = async () => {
-    Alert.alert("Logout", "Are you sure you want to logout?", [
-      { text: "Cancel", style: "cancel" },
+    Alert.alert("Logout", "Are you sure you want to leave?", [
+      { text: "Stay", style: "cancel" },
       {
         text: "Logout",
         style: "destructive",
@@ -39,97 +41,101 @@ const Profile = () => {
   };
 
   const menuItems = [
-    { id: 1, title: "Account Settings", icon: Settings, color: "#4A3728" },
-    { id: 2, title: "Notifications", icon: Bell, color: "#A6AE91" },
-    { id: 3, title: "Help & Support", icon: HelpCircle, color: "#8D7B6D" },
-    { id: 4, title: "Privacy & Security", icon: Shield, color: "#A69080" },
+    { id: 1, title: "Account Settings", icon: Settings, color: "#7F5539" },
+    { id: 2, title: "Notifications", icon: Bell, color: "#A98467" },
+    { id: 3, title: "Privacy & Security", icon: Shield, color: "#606C38" },
+    { id: 4, title: "Help & Support", icon: HelpCircle, color: "#B08968" },
   ];
 
   return (
-    <ScrollView className="flex-1 bg-[#FDFBF7]">
-      {/* Header */}
-      <View className="bg-[#4A3728] pt-12 pb-8 px-6 rounded-b-3xl">
-        <Text className="text-[#FDFBF7] text-3xl font-bold">Profile</Text>
-        <Text className="text-[#E0D7D0] mt-2">Manage your account</Text>
+    <View className="flex-1 bg-[#F5F1ED]">
+      <StatusBar barStyle="dark-content" />
+      
+      {/* --- Creamy Header --- */}
+      <View className="bg-[#E6CCB2] pt-16 pb-20 px-8 rounded-b-[60px] shadow-sm">
+        <Text className="text-[#7F5539] text-sm font-bold tracking-[3px] uppercase">Staff Profile</Text>
+        <Text className="text-[#432818] text-4xl font-black mt-1">Settings</Text>
       </View>
 
-      {/* Profile Card */}
-      <View className="px-6 -mt-12">
-        <View className="bg-white/90 rounded-2xl p-6 shadow-lg border border-[#E0D7D0]">
+      {/* --- Floating Profile Card --- */}
+      <View className="px-6 -mt-16">
+        <View className="bg-white rounded-[40px] p-8 shadow-xl shadow-black/5 border border-[#EDE0D4]">
           <View className="items-center">
-            <View className="bg-[#E0D7D0] w-20 h-20 rounded-full items-center justify-center mb-4">
-              <User size={40} color="#4A3728" />
+            {/* Avatar with Ring */}
+            <View className="p-1 border-2 border-[#DDBEA9] rounded-full mb-4">
+               <View className="bg-[#F5F1ED] w-24 h-24 rounded-full items-center justify-center border-4 border-white shadow-inner">
+                 <User size={48} color="#7F5539" strokeWidth={1.5} />
+               </View>
             </View>
-            <Text className="text-[#4A3728] font-bold text-xl">
-              {user?.email?.split("@")[0] || "Admin User"}
+            
+            <Text className="text-[#432818] font-black text-2xl">
+              {user?.email?.split("@")[0] || "Chief Barista"}
             </Text>
-            <View className="flex-row items-center mt-2">
-              <Mail size={16} color="#8D7B6D" />
-              <Text className="text-[#8D7B6D] ml-2">
-                {user?.email || "admin@cafequeue.com"}
+            
+            <View className="flex-row items-center mt-2 bg-[#F5F1ED] px-4 py-1.5 rounded-full">
+              <Store size={14} color="#B08968" />
+              <Text className="text-[#B08968] font-bold text-[11px] ml-2 uppercase tracking-tighter">
+                Main Street Cafe Manager
               </Text>
-            </View>
-            <View className="flex-row items-center mt-1">
-              <Store size={16} color="#8D7B6D" />
-              <Text className="text-[#8D7B6D] ml-2">CafeQueue Manager</Text>
             </View>
           </View>
 
-          <View className="flex-row mt-6 pt-6 border-t border-[#E0D7D0]">
+          {/* Stats Row */}
+          <View className="flex-row mt-8 pt-6 border-t border-[#F5F1ED]">
             <View className="flex-1 items-center">
-              <Text className="text-2xl font-bold text-[#4A3728]">156</Text>
-              <Text className="text-[#8D7B6D] text-sm mt-1">Orders</Text>
+              <Text className="text-xl font-black text-[#7F5539]">156</Text>
+              <Text className="text-[#A98467] text-[10px] font-bold uppercase mt-1">Orders</Text>
             </View>
-            <View className="w-px bg-[#E0D7D0]" />
+            <View className="w-[1px] bg-[#EDE0D4] h-8 self-center" />
             <View className="flex-1 items-center">
-              <Text className="text-2xl font-bold text-[#4A3728]">4.8</Text>
-              <Text className="text-[#8D7B6D] text-sm mt-1">Rating</Text>
+              <Text className="text-xl font-black text-[#7F5539]">4.8</Text>
+              <Text className="text-[#A98467] text-[10px] font-bold uppercase mt-1">Rating</Text>
             </View>
-            <View className="w-px bg-[#E0D7D0]" />
+            <View className="w-[1px] bg-[#EDE0D4] h-8 self-center" />
             <View className="flex-1 items-center">
-              <Text className="text-2xl font-bold text-[#4A3728]">$2.4K</Text>
-              <Text className="text-[#8D7B6D] text-sm mt-1">Revenue</Text>
+              <Text className="text-xl font-black text-[#7F5539]">$2.4K</Text>
+              <Text className="text-[#A98467] text-[10px] font-bold uppercase mt-1">Sales</Text>
             </View>
           </View>
         </View>
       </View>
 
-      {/* Menu Items */}
-      <View className="px-6 mt-6">
-        {menuItems.map((item) => (
-          <Pressable
-            key={item.id}
-            className="bg-white/90 rounded-2xl p-4 mb-3 shadow-sm flex-row items-center border border-[#E0D7D0]"
-          >
-            <View
-              className="w-12 h-12 rounded-full items-center justify-center"
-              style={{ backgroundColor: `${item.color}20` }}
+      <ScrollView className="flex-1 px-6 mt-6" showsVerticalScrollIndicator={false}>
+        {/* Menu List */}
+        <View className="bg-white rounded-[35px] p-4 border border-[#EDE0D4] shadow-sm">
+          {menuItems.map((item, index) => (
+            <Pressable
+              key={item.id}
+              className={`flex-row items-center p-4 ${index !== menuItems.length - 1 ? 'border-b border-[#F5F1ED]' : ''}`}
             >
-              <item.icon size={24} color={item.color} />
-            </View>
-            <Text className="flex-1 text-[#4A3728] font-semibold text-base ml-4">
-              {item.title}
-            </Text>
-            <ChevronRight size={20} color="#8D7B6D" />
-          </Pressable>
-        ))}
-      </View>
+              <View className="w-10 h-10 rounded-2xl items-center justify-center" style={{ backgroundColor: `${item.color}15` }}>
+                <item.icon size={20} color={item.color} />
+              </View>
+              <Text className="flex-1 text-[#432818] font-bold text-base ml-4">
+                {item.title}
+              </Text>
+              <ChevronRight size={18} color="#DDBEA9" />
+            </Pressable>
+          ))}
+        </View>
 
-      {/* Logout Button */}
-      <View className="px-6 mt-4">
+        {/* Logout Section */}
         <Pressable
           onPress={handleLogout}
-          className="bg-[#8D534A] rounded-2xl p-4 flex-row items-center justify-center shadow-sm"
+          className="mt-6 bg-[#6B2737] rounded-[28px] p-5 flex-row items-center justify-center shadow-lg shadow-[#6B2737]/20"
         >
-          <LogOut size={20} color="#FDFBF7" />
-          <Text className="text-[#FDFBF7] font-bold text-base ml-2">
-            Logout
+          <LogOut size={20} color="white" strokeWidth={2.5} />
+          <Text className="text-white font-black text-base ml-3 uppercase tracking-wider">
+            Sign Out
           </Text>
         </Pressable>
-      </View>
-
-      <View className="h-8" />
-    </ScrollView>
+        
+        <Text className="text-center text-[#B08968] text-[10px] font-bold mt-8 uppercase tracking-[2px]">
+          CafeQueue v2.0.4 • 2026
+        </Text>
+        <View className="h-12" />
+      </ScrollView>
+    </View>
   );
 };
 
