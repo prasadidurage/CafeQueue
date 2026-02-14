@@ -1,103 +1,50 @@
-import React, { createContext, ReactNode, useContext, useState } from "react";
-
-export interface MenuItem {
-  id: number;
-  name: string;
-  category: string;
-  price: string;
-  available: boolean;
-}
+import React, { createContext, useContext, useEffect, useState } from "react";
+import { MenuItem, MenuService } from "../services/MenuService";
 
 interface MenuContextType {
   menuItems: MenuItem[];
-  addMenuItem: (item: MenuItem) => void;
-  updateMenuItem: (item: MenuItem) => void;
-  toggleStock: (id: number) => void;
-  deleteMenuItem: (id: number) => void;
+  addMenuItem: (item: Omit<MenuItem, "id" | "createdAt">) => Promise<void>;
+  updateMenuItem: (item: Partial<MenuItem> & { id: string }) => Promise<void>;
+  deleteMenuItem: (id: string) => Promise<void>;
+  toggleStock: (id: string) => Promise<void>;
+  isLoading: boolean;
 }
 
 const MenuContext = createContext<MenuContextType | undefined>(undefined);
 
-export const MenuProvider = ({ children }: { children: ReactNode }) => {
-  const [menuItems, setMenuItems] = useState<MenuItem[]>([
-    {
-      id: 1,
-      name: "Espresso",
-      category: "Coffee",
-      price: "$3.50",
-      available: true,
-    },
-    {
-      id: 2,
-      name: "Cappuccino",
-      category: "Coffee",
-      price: "$4.50",
-      available: true,
-    },
-    {
-      id: 3,
-      name: "Latte",
-      category: "Coffee",
-      price: "$4.00",
-      available: true,
-    },
-    {
-      id: 4,
-      name: "Club Sandwich",
-      category: "Food",
-      price: "$8.50",
-      available: true,
-    },
-    {
-      id: 5,
-      name: "Caesar Salad",
-      category: "Food",
-      price: "$7.00",
-      available: false,
-    },
-    {
-      id: 6,
-      name: "Blueberry Muffin",
-      category: "Bakery",
-      price: "$3.00",
-      available: true,
-    },
-    {
-      id: 7,
-      name: "Croissant",
-      category: "Bakery",
-      price: "$3.50",
-      available: true,
-    },
-    {
-      id: 8,
-      name: "Green Tea",
-      category: "Tea",
-      price: "$2.50",
-      available: true,
-    },
-  ]);
+export const MenuProvider = ({ children }: { children: React.ReactNode }) => {
+  const [menuItems, setMenuItems] = useState<MenuItem[]>([]);
+  const [isLoading, setIsLoading] = useState(true);
 
-  const addMenuItem = (item: MenuItem) => {
-    setMenuItems((prev) => [...prev, item]);
+  useEffect(() => {
+    // Subscribe to real-time updates from Firestore
+    const unsubscribe = MenuService.subscribeToMenu((items) => {
+      setMenuItems(items);
+      setIsLoading(false);
+    });
+
+    // Cleanup subscription on unmount
+    return () => unsubscribe();
+  }, []);
+
+  const addMenuItem = async (item: Omit<MenuItem, "id" | "createdAt">) => {
+    await MenuService.addMenuItem(item);
   };
 
-  const updateMenuItem = (updatedItem: MenuItem) => {
-    setMenuItems((prev) =>
-      prev.map((item) => (item.id === updatedItem.id ? updatedItem : item)),
-    );
+  const updateMenuItem = async (item: Partial<MenuItem> & { id: string }) => {
+    const { id, ...updates } = item;
+    await MenuService.updateMenuItem(id, updates);
   };
 
-  const toggleStock = (id: number) => {
-    setMenuItems((prev) =>
-      prev.map((item) =>
-        item.id === id ? { ...item, available: !item.available } : item,
-      ),
-    );
+  const deleteMenuItem = async (id: string) => {
+    await MenuService.deleteMenuItem(id);
   };
 
-  const deleteMenuItem = (id: number) => {
-    setMenuItems((prev) => prev.filter((item) => item.id !== id));
+  const toggleStock = async (id: string) => {
+    const item = menuItems.find((i) => i.id === id);
+    if (item) {
+      await MenuService.toggleStock(id, item.available);
+    }
   };
 
   return (
@@ -106,8 +53,9 @@ export const MenuProvider = ({ children }: { children: ReactNode }) => {
         menuItems,
         addMenuItem,
         updateMenuItem,
-        toggleStock,
         deleteMenuItem,
+        toggleStock,
+        isLoading,
       }}
     >
       {children}

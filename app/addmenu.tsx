@@ -14,7 +14,7 @@ const AddMenu = () => {
     const [newItemCategory, setNewItemCategory] = useState("Coffee");
     const [newItemAvailable, setNewItemAvailable] = useState(true);
 
-    const handleSaveItem = () => {
+    const handleSaveItem = async () => {
         if (!newItemName || !newItemPrice) {
             Alert.alert("Error", "Please fill in all fields");
             return;
@@ -23,17 +23,20 @@ const AddMenu = () => {
         const priceFormatted = newItemPrice.startsWith('$') ? newItemPrice : `$${newItemPrice}`;
 
         const newItem = {
-            id: Date.now(), // Simple unique ID generation
             name: newItemName,
             category: newItemCategory,
             price: priceFormatted,
             available: newItemAvailable,
         };
 
-        addMenuItem(newItem);
-        Alert.alert("Success", "Item added to menu!", [
-            { text: "OK", onPress: () => router.back() }
-        ]);
+        try {
+            await addMenuItem(newItem);
+            Alert.alert("Success", "Item added to menu!", [
+                { text: "OK", onPress: () => router.back() }
+            ]);
+        } catch (error) {
+            Alert.alert("Error", "Failed to add item");
+        }
     };
 
     return (
