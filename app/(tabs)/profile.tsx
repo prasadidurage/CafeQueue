@@ -102,22 +102,22 @@ const Profile = () => {
 
       <ScrollView className="flex-1 px-6 mt-6" showsVerticalScrollIndicator={false}>
         {/* Menu List */}
-        <View className="bg-white rounded-[35px] p-4 border border-[#EDE0D4] shadow-sm">
-          {menuItems.map((item, index) => (
-            <Pressable
-              key={item.id}
-              className={`flex-row items-center p-4 ${index !== menuItems.length - 1 ? 'border-b border-[#F5F1ED]' : ''}`}
-            >
-              <View className="w-10 h-10 rounded-2xl items-center justify-center" style={{ backgroundColor: `${item.color}15` }}>
-                <item.icon size={20} color={item.color} />
-              </View>
-              <Text className="flex-1 text-[#432818] font-bold text-base ml-4">
-                {item.title}
-              </Text>
-              <ChevronRight size={18} color="#DDBEA9" />
-            </Pressable>
-          ))}
-        </View>
+          <View className="bg-white rounded-[35px] p-4 border border-[#EDE0D4] shadow-sm">
+            {menuItems.map((item, index) => (
+              <Pressable
+                key={item.id}
+                className={`flex-row items-center p-4 ${index !== menuItems.length - 1 ? 'border-b border-[#F5F1ED]' : ''}`}
+              >
+                <View className="w-10 h-10 rounded-2xl items-center justify-center" style={{ backgroundColor: `${item.color}15` }}>
+                  <item.icon size={20} color={item.color} />
+                </View>
+                <Text className="flex-1 text-[#432818] font-bold text-base ml-4">
+                  {item.title}
+                </Text>
+                <ChevronRight size={18} color="#DDBEA9" />
+              </Pressable>
+            ))}
+          </View>
 
         {/* Logout Section */}
         <Pressable
