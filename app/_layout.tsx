@@ -2,7 +2,7 @@ import { AuthProvider } from "@/context/AuthContext";
 import { LoaderProvider } from "@/context/LoaderContext";
 import { MenuProvider } from "@/context/MenuContext";
 import { OrderProvider } from "@/context/OrderContext";
-import { Slot } from "expo-router";
+import { Stack } from "expo-router";
 import React from "react";
 import { View } from "react-native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
@@ -22,17 +22,19 @@ const RootLayout = () => {
         <OrderProvider>
           <MenuProvider>
             <View className="flex-1" style={{ marginTop: insets.top }}>
-              {/* Slot renders the currently active screen */}
-              <Slot />
+              {/* Stack renders the currently active screen with navigation capability */}
+              <Stack screenOptions={{ headerShown: false }}>
+                <Stack.Screen name="(tabs)" />
+                <Stack.Screen name="(auth)" />
+                <Stack.Screen name="index" />
+                <Stack.Screen name="addmenu" options={{ presentation: 'modal' }} />
+                <Stack.Screen name="addorder" options={{ presentation: 'modal' }} />
+              </Stack>
             </View>
           </MenuProvider>
         </OrderProvider>
       </AuthProvider>
     </LoaderProvider>
-    // <SafeAreaView className="flex-1">
-    // {/* Slot renders the currently active screen */}
-    // <Slot />
-    // </SafeAreaView>
   );
 };
 

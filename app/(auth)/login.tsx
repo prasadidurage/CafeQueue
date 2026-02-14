@@ -4,13 +4,13 @@ import React, { useState } from "react";
 import {
   Keyboard,
   Pressable,
-  SafeAreaView,
   Text,
   TextInput,
   TouchableWithoutFeedback,
   View,
 } from "react-native";
-import Animated, { FadeInDown, FadeInUp } from 'react-native-reanimated';
+import { SafeAreaView } from "react-native-safe-area-context";
+import Animated, { FadeInDown, FadeInUp } from "react-native-reanimated";
 
 const Login = () => {
   const router = useRouter();
@@ -21,13 +21,25 @@ const Login = () => {
     <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
       <SafeAreaView className="flex-1 bg-[#FDFBF7]">
         {/* Decorative Shapes - Coffee Theme Colors */}
-        <Animated.View entering={FadeInUp.delay(200).duration(1000).springify()} className="absolute -top-10 -left-10 w-40 h-40 bg-[#4A3728] rounded-full opacity-10" />
-        <Animated.View entering={FadeInUp.delay(400).duration(1000).springify()} className="absolute top-40 -right-20 w-64 h-64 bg-[#A6AE91] rounded-full opacity-20" />
-        <Animated.View entering={FadeInDown.delay(200).duration(1000).springify()} className="absolute bottom-[-50] left-[-20] w-80 h-80 bg-[#D7CCC8] rounded-full opacity-30" />
+        <Animated.View
+          entering={FadeInUp.delay(200).duration(1000).springify()}
+          className="absolute -top-10 -left-10 w-40 h-40 bg-[#4A3728] rounded-full opacity-10"
+        />
+        <Animated.View
+          entering={FadeInUp.delay(400).duration(1000).springify()}
+          className="absolute top-40 -right-20 w-64 h-64 bg-[#A6AE91] rounded-full opacity-20"
+        />
+        <Animated.View
+          entering={FadeInDown.delay(200).duration(1000).springify()}
+          className="absolute bottom-[-50] left-[-20] w-80 h-80 bg-[#D7CCC8] rounded-full opacity-30"
+        />
 
         <View className="flex-1 justify-center px-8">
           {/* Header Section */}
-          <Animated.View entering={FadeInDown.delay(100).duration(1000).springify()} className="items-center mb-12">
+          <Animated.View
+            entering={FadeInDown.delay(100).duration(1000).springify()}
+            className="items-center mb-12"
+          >
             <View className="bg-[#4A3728] p-5 rounded-[30px] mb-5 shadow-lg shadow-[#4A3728]/40">
               <Coffee color="#FDFBF7" size={38} strokeWidth={1.5} />
             </View>
@@ -42,7 +54,10 @@ const Login = () => {
           {/* Form Section */}
           <View className="space-y-5">
             {/* Email Input */}
-            <Animated.View entering={FadeInDown.delay(200).duration(1000).springify()} className="bg-white/80 border border-[#E0D7D0] flex-row items-center p-4 rounded-2xl shadow-sm">
+            <Animated.View
+              entering={FadeInDown.delay(200).duration(1000).springify()}
+              className="bg-white/80 border border-[#E0D7D0] flex-row items-center p-4 rounded-2xl shadow-sm"
+            >
               <Mail size={20} color="#8D7B6D" />
               <TextInput
                 placeholder="Work Email"
@@ -55,7 +70,10 @@ const Login = () => {
             </Animated.View>
 
             {/* Password Input */}
-            <Animated.View entering={FadeInDown.delay(400).duration(1000).springify()} className="bg-white/80 border border-[#E0D7D0] flex-row items-center p-4 rounded-2xl shadow-sm mt-4">
+            <Animated.View
+              entering={FadeInDown.delay(400).duration(1000).springify()}
+              className="bg-white/80 border border-[#E0D7D0] flex-row items-center p-4 rounded-2xl shadow-sm mt-4"
+            >
               <Lock size={20} color="#8D7B6D" />
               <TextInput
                 placeholder="Password"
@@ -68,7 +86,9 @@ const Login = () => {
             </Animated.View>
 
             {/* Login Button */}
-            <Animated.View entering={FadeInDown.delay(600).duration(1000).springify()}>
+            <Animated.View
+              entering={FadeInDown.delay(600).duration(1000).springify()}
+            >
               <Pressable
                 onPress={() => router.replace("/(tabs)/home")}
                 style={({ pressed }) => [{ opacity: pressed ? 0.9 : 1 }]}
@@ -82,7 +102,10 @@ const Login = () => {
             </Animated.View>
 
             {/* Register Link */}
-            <Animated.View entering={FadeInDown.delay(800).duration(1000).springify()} className="flex-row justify-center mt-8">
+            <Animated.View
+              entering={FadeInDown.delay(800).duration(1000).springify()}
+              className="flex-row justify-center mt-8"
+            >
               <Text className="text-[#8D7B6D]">New to CafeQueue? </Text>
               <Pressable onPress={() => router.push("/register")}>
                 <Text className="text-[#A6AE91] font-bold">Create Account</Text>
@@ -92,7 +115,10 @@ const Login = () => {
         </View>
 
         {/* Footer Accent */}
-        <Animated.View entering={FadeInDown.delay(1000).duration(1000).springify()} className="items-center pb-8">
+        <Animated.View
+          entering={FadeInDown.delay(1000).duration(1000).springify()}
+          className="items-center pb-8"
+        >
           <Text className="text-[#D7CCC8] font-semibold text-xs tracking-[2px]">
             PREMIUM CAFE SOLUTIONS
           </Text>

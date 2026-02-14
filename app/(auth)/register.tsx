@@ -7,13 +7,13 @@ import {
   Alert,
   Keyboard,
   Pressable,
-  SafeAreaView,
   Text,
   TextInput,
   TouchableWithoutFeedback,
-  View
+  View,
 } from "react-native";
-import Animated, { FadeInDown, FadeInUp } from 'react-native-reanimated';
+import { SafeAreaView } from "react-native-safe-area-context";
+import Animated, { FadeInDown, FadeInUp } from "react-native-reanimated";
 
 const Register = () => {
   const router = useRouter();
@@ -52,12 +52,21 @@ const Register = () => {
     <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
       <SafeAreaView className="flex-1 bg-[#FDFBF7]">
         {/* Background Decorative Circles */}
-        <Animated.View entering={FadeInUp.delay(200).duration(1000).springify()} className="absolute -top-20 -right-20 w-64 h-64 bg-[#A6AE91] rounded-full opacity-20 blur-3xl" />
-        <Animated.View entering={FadeInDown.delay(200).duration(1000).springify()} className="absolute bottom-20 -left-20 w-72 h-72 bg-[#D7CCC8] rounded-full opacity-30 blur-3xl" />
+        <Animated.View
+          entering={FadeInUp.delay(200).duration(1000).springify()}
+          className="absolute -top-20 -right-20 w-64 h-64 bg-[#A6AE91] rounded-full opacity-20 blur-3xl"
+        />
+        <Animated.View
+          entering={FadeInDown.delay(200).duration(1000).springify()}
+          className="absolute bottom-20 -left-20 w-72 h-72 bg-[#D7CCC8] rounded-full opacity-30 blur-3xl"
+        />
 
         <View className="flex-1 justify-center px-8">
           {/* Header */}
-          <Animated.View entering={FadeInDown.delay(100).duration(1000).springify()} className="items-center mb-10">
+          <Animated.View
+            entering={FadeInDown.delay(100).duration(1000).springify()}
+            className="items-center mb-10"
+          >
             <View className="bg-[#A6AE91] p-5 rounded-[30px] mb-5 shadow-lg shadow-[#A6AE91]/40">
               <UserPlus color="#FDFBF7" size={38} strokeWidth={1.5} />
             </View>
@@ -72,7 +81,10 @@ const Register = () => {
           {/* Form Fields */}
           <View className="space-y-4">
             {/* Name Input */}
-            <Animated.View entering={FadeInDown.delay(200).duration(1000).springify()} className="bg-white/80 border border-[#E0D7D0] flex-row items-center p-4 rounded-2xl shadow-sm">
+            <Animated.View
+              entering={FadeInDown.delay(200).duration(1000).springify()}
+              className="bg-white/80 border border-[#E0D7D0] flex-row items-center p-4 rounded-2xl shadow-sm"
+            >
               <User size={20} color="#8D7B6D" />
               <TextInput
                 placeholder="Full Name"
@@ -84,7 +96,10 @@ const Register = () => {
             </Animated.View>
 
             {/* Email Input */}
-            <Animated.View entering={FadeInDown.delay(300).duration(1000).springify()} className="bg-white/80 border border-[#E0D7D0] flex-row items-center p-4 rounded-2xl shadow-sm mt-3">
+            <Animated.View
+              entering={FadeInDown.delay(300).duration(1000).springify()}
+              className="bg-white/80 border border-[#E0D7D0] flex-row items-center p-4 rounded-2xl shadow-sm mt-3"
+            >
               <Mail size={20} color="#8D7B6D" />
               <TextInput
                 placeholder="Email Address"
@@ -97,7 +112,10 @@ const Register = () => {
             </Animated.View>
 
             {/* Password Input */}
-            <Animated.View entering={FadeInDown.delay(400).duration(1000).springify()} className="bg-white/80 border border-[#E0D7D0] flex-row items-center p-4 rounded-2xl shadow-sm mt-3">
+            <Animated.View
+              entering={FadeInDown.delay(400).duration(1000).springify()}
+              className="bg-white/80 border border-[#E0D7D0] flex-row items-center p-4 rounded-2xl shadow-sm mt-3"
+            >
               <Lock size={20} color="#8D7B6D" />
               <TextInput
                 placeholder="Password"
@@ -110,7 +128,10 @@ const Register = () => {
             </Animated.View>
 
             {/* Confirm Password */}
-            <Animated.View entering={FadeInDown.delay(500).duration(1000).springify()} className="bg-white/80 border border-[#E0D7D0] flex-row items-center p-4 rounded-2xl shadow-sm mt-3">
+            <Animated.View
+              entering={FadeInDown.delay(500).duration(1000).springify()}
+              className="bg-white/80 border border-[#E0D7D0] flex-row items-center p-4 rounded-2xl shadow-sm mt-3"
+            >
               <Lock size={20} color="#8D7B6D" />
               <TextInput
                 placeholder="Confirm Password"
@@ -123,11 +144,15 @@ const Register = () => {
             </Animated.View>
 
             {/* Register Button */}
-            <Animated.View entering={FadeInDown.delay(600).duration(1000).springify()}>
+            <Animated.View
+              entering={FadeInDown.delay(600).duration(1000).springify()}
+            >
               <Pressable
                 onPress={handleRegister}
                 disabled={isLoading}
-                style={({ pressed }) => [{ opacity: (pressed || isLoading) ? 0.8 : 1 }]}
+                style={({ pressed }) => [
+                  { opacity: pressed || isLoading ? 0.8 : 1 },
+                ]}
                 className="bg-[#4A3728] p-5 rounded-2xl shadow-xl shadow-[#4A3728]/30 mt-8"
               >
                 <Text className="text-[#FDFBF7] text-center font-bold text-lg">
@@ -137,21 +162,30 @@ const Register = () => {
             </Animated.View>
 
             {/* Login Link */}
-            <Animated.View entering={FadeInDown.delay(700).duration(1000).springify()}>
+            <Animated.View
+              entering={FadeInDown.delay(700).duration(1000).springify()}
+            >
               <Pressable
                 onPress={() => router.back()}
                 className="flex-row justify-center items-center mt-8"
               >
                 <ChevronLeft size={18} color="#8D7B6D" />
-                <Text className="text-[#8D7B6D] ml-1">Already have an account? </Text>
-                <Text className="text-[#A6AE91] font-bold underline">Login</Text>
+                <Text className="text-[#8D7B6D] ml-1">
+                  Already have an account?{" "}
+                </Text>
+                <Text className="text-[#A6AE91] font-bold underline">
+                  Login
+                </Text>
               </Pressable>
             </Animated.View>
           </View>
         </View>
 
         {/* Brand Label */}
-        <Animated.View entering={FadeInDown.delay(800).duration(1000).springify()} className="items-center pb-8">
+        <Animated.View
+          entering={FadeInDown.delay(800).duration(1000).springify()}
+          className="items-center pb-8"
+        >
           <Text className="text-[#D7CCC8] font-semibold text-xs tracking-[2px]">
             CAFEQUEUE STAFF PORTAL
           </Text>
