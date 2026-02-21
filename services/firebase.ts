@@ -1,25 +1,27 @@
-// firebaseConfig.ts
-// lib/
 import AsyncStorage from "@react-native-async-storage/async-storage";
-import { initializeApp } from "firebase/app";
+import { getApp, getApps, initializeApp } from "firebase/app";
 import { getFirestore } from "firebase/firestore";
 // @ts-ignore
-import { getReactNativePersistence, initializeAuth } from "firebase/auth";
+import { getAuth, initializeAuth, getReactNativePersistence } from "firebase/auth";
 
+// Your web app's Firebase configuration
 const firebaseConfig = {
-  apiKey: "AIzaSyC3ZuY-uydSY9utx5lfkXXIQ9duIK9BjeU",
-  authDomain: "task-manager-72-a7c06.firebaseapp.com",
-  projectId: "task-manager-72-a7c06",
-  storageBucket: "task-manager-72-a7c06.firebasestorage.app",
-  messagingSenderId: "41935826620",
-  appId: "1:41935826620:web:3483ec2cbf9d7474d42ab9",
+  apiKey: "AIzaSyBZQgbTeo_KdroSu_jm17tliaw_1sWIcck",
+  authDomain: "cafequeue-79211.firebaseapp.com",
+  projectId: "cafequeue-79211",
+  storageBucket: "cafequeue-79211.firebasestorage.app",
+  messagingSenderId: "366489149179",
+  appId: "1:366489149179:web:361d50ebbb80054ed9da5e",
+  measurementId: "G-8DHLVZ2L5R",
 };
-const app = initializeApp(firebaseConfig);
 
-// for authenticate
-// only need for before firebase 9v
-export const auth = initializeAuth(app, {
-  persistence: getReactNativePersistence(AsyncStorage),
-});
+const app = getApps().length ? getApp() : initializeApp(firebaseConfig);
+
+export const auth =
+  getApps().length > 0
+    ? getAuth(app)
+    : initializeAuth(app, {
+      persistence: getReactNativePersistence(AsyncStorage),
+    });
 
 export const db = getFirestore(app);

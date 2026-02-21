@@ -1,7 +1,10 @@
+import { login } from "@/services/authService";
+import { useLoader } from "@/hooks/useLoader";
 import { useRouter } from "expo-router";
 import { ChevronRight, Coffee, Lock, Mail } from "lucide-react-native";
 import React, { useState } from "react";
 import {
+  Alert,
   Keyboard,
   Pressable,
   Text,
@@ -14,8 +17,28 @@ import Animated, { FadeInDown, FadeInUp } from "react-native-reanimated";
 
 const Login = () => {
   const router = useRouter();
+  const { showLoader, hideLoader, isLoading } = useLoader();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+
+  const handleLogin = async () => {
+    if (isLoading) return;
+    if (!email || !password) {
+      Alert.alert("Error", "Please fill all fields!");
+      return;
+    }
+
+    try {
+      showLoader();
+      await login(email, password);
+      router.replace("/(tabs)/home");
+    } catch (error: any) {
+      console.log("Login Error:", error);
+      Alert.alert("Error", "Invalid email or password. Please try again.");
+    } finally {
+      hideLoader();
+    }
+  };
 
   return (
     <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
@@ -66,6 +89,7 @@ const Login = () => {
                 value={email}
                 onChangeText={setEmail}
                 autoCapitalize="none"
+                keyboardType="email-address"
               />
             </Animated.View>
 
@@ -90,14 +114,15 @@ const Login = () => {
               entering={FadeInDown.delay(600).duration(1000).springify()}
             >
               <Pressable
-                onPress={() => router.replace("/(tabs)/home")}
-                style={({ pressed }) => [{ opacity: pressed ? 0.9 : 1 }]}
+                onPress={handleLogin}
+                disabled={isLoading}
+                style={({ pressed }) => [{ opacity: (pressed || isLoading) ? 0.8 : 1 }]}
                 className="bg-[#4A3728] flex-row justify-center items-center p-5 rounded-2xl shadow-xl shadow-[#4A3728]/30 mt-8"
               >
                 <Text className="text-[#FDFBF7] text-center font-bold text-lg mr-2">
-                  Sign In to Workspace
+                  {isLoading ? "Signing In..." : "Sign In to Workspace"}
                 </Text>
-                <ChevronRight color="#FDFBF7" size={20} />
+                {!isLoading && <ChevronRight color="#FDFBF7" size={20} />}
               </Pressable>
             </Animated.View>
 
@@ -113,6 +138,7 @@ const Login = () => {
             </Animated.View>
           </View>
         </View>
+
 
         {/* Footer Accent */}
         <Animated.View

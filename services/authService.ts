@@ -33,9 +33,9 @@ export const registerUser = async (
 
   // role
   // firestore (db)
-  setDoc(doc(db, "users", userCred.user.uid), {
+  await setDoc(doc(db, "users", userCred.user.uid), {
     name, // name: name
-    role: "",
+    role: "staff",
     email,
     createdAt: new Date()
   })

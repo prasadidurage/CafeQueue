@@ -28,11 +28,11 @@ const Register = () => {
     if (isLoading) return;
 
     if (!name || !email || !password || !conPassword) {
-      Alert.alert("Error", "Please fill all fields...!");
+      Alert.alert("Error", "Please fill all fields!");
       return;
     }
     if (password !== conPassword) {
-      Alert.alert("Error", "Passwords do not match...!");
+      Alert.alert("Error", "Passwords do not match!");
       return;
     }
 
@@ -40,7 +40,7 @@ const Register = () => {
       showLoader();
       await registerUser(name, email, password);
       Alert.alert("Success", "Account created successfully!");
-      router.replace("/login");
+      router.replace("/(auth)/login");
     } catch (err) {
       Alert.alert("Error", "Registration failed. Please try again.");
     } finally {
@@ -108,6 +108,7 @@ const Register = () => {
                 value={email}
                 onChangeText={setEmail}
                 autoCapitalize="none"
+                keyboardType="email-address"
               />
             </Animated.View>
 

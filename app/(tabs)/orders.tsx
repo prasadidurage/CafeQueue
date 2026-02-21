@@ -91,15 +91,15 @@ const Orders = () => {
       <StatusBar barStyle="light-content" />
 
       {/* Header Background */}
-      <View className="absolute top-0 w-full h-[220px] bg-[#2C1E11] rounded-b-[40px] shadow-lg" />
+      <View className="absolute top-0 w-full h-[220px] bg-[#DDBEA9] rounded-b-[40px] shadow-lg" />
 
       <SafeAreaView className="flex-1" edges={["top"]}>
         {/* Header Title */}
         <View className="px-6 pt-2 pb-6">
-          <Text className="text-[#D4A373] text-xs font-bold tracking-[3px] uppercase mb-1">
+          <Text className="text-[#432818] text-sm font-bold tracking-[3px] uppercase">
             Kitchen Display
           </Text>
-          <Text className="text-white text-3xl font-black">
+          <Text className="text-[#432818] text-4xl font-black mt-1">
             Incoming Orders
           </Text>
         </View>
