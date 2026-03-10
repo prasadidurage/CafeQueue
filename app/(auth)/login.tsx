@@ -1,5 +1,6 @@
-import { login } from "@/services/authService";
+import SuccessModal from "@/components/SuccessModal";
 import { useLoader } from "@/hooks/useLoader";
+import { login } from "@/services/authService";
 import { useRouter } from "expo-router";
 import { ChevronRight, Coffee, Lock, Mail } from "lucide-react-native";
 import React, { useState } from "react";
@@ -12,14 +13,15 @@ import {
   TouchableWithoutFeedback,
   View,
 } from "react-native";
-import { SafeAreaView } from "react-native-safe-area-context";
 import Animated, { FadeInDown, FadeInUp } from "react-native-reanimated";
+import { SafeAreaView } from "react-native-safe-area-context";
 
 const Login = () => {
   const router = useRouter();
   const { showLoader, hideLoader, isLoading } = useLoader();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [showSuccess, setShowSuccess] = useState(false);
 
   const handleLogin = async () => {
     if (isLoading) return;
@@ -31,18 +33,29 @@ const Login = () => {
     try {
       showLoader();
       await login(email, password);
-      router.replace("/(tabs)/home");
+      hideLoader();
+      setShowSuccess(true);
+      // SuccessModal will auto-close after 2s, we can wait a bit or use the onClose prop
     } catch (error: any) {
+      hideLoader();
       console.log("Login Error:", error);
       Alert.alert("Error", "Invalid email or password. Please try again.");
-    } finally {
-      hideLoader();
     }
+  };
+
+  const handleSuccessClose = () => {
+    setShowSuccess(false);
+    router.replace("/(tabs)/home");
   };
 
   return (
     <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
       <SafeAreaView className="flex-1 bg-[#FDFBF7]">
+        <SuccessModal
+          visible={showSuccess}
+          message="Welcome back!"
+          onClose={handleSuccessClose}
+        />
         {/* Decorative Shapes - Coffee Theme Colors */}
         <Animated.View
           entering={FadeInUp.delay(200).duration(1000).springify()}

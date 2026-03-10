@@ -1,6 +1,7 @@
+import SuccessModal from "@/components/SuccessModal";
 import { useMenu } from "@/context/MenuContext";
 import { useRouter } from "expo-router";
-import { ArrowLeft, CheckCircle, Upload } from "lucide-react-native";
+import { ArrowLeft, CheckCircle } from "lucide-react-native";
 import React, { useState } from "react";
 import { Alert, Pressable, ScrollView, StatusBar, Text, TextInput, TouchableOpacity, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
@@ -13,6 +14,7 @@ const AddMenu = () => {
     const [newItemPrice, setNewItemPrice] = useState("");
     const [newItemCategory, setNewItemCategory] = useState("Coffee");
     const [newItemAvailable, setNewItemAvailable] = useState(true);
+    const [showSuccess, setShowSuccess] = useState(false);
 
     const handleSaveItem = async () => {
         if (!newItemName || !newItemPrice) {
@@ -31,18 +33,26 @@ const AddMenu = () => {
 
         try {
             await addMenuItem(newItem);
-            Alert.alert("Success", "Item added to menu!", [
-                { text: "OK", onPress: () => router.back() }
-            ]);
+            setShowSuccess(true);
         } catch (error) {
             Alert.alert("Error", "Failed to add item");
         }
+    };
+
+    const handleSuccessClose = () => {
+        setShowSuccess(false);
+        router.back();
     };
 
     return (
         <View className="flex-1 bg-[#F9F5F0]">
             <StatusBar barStyle="dark-content" />
             <SafeAreaView className="flex-1" edges={['top']}>
+                <SuccessModal
+                    visible={showSuccess}
+                    message="Item Added!"
+                    onClose={handleSuccessClose}
+                />
                 {/* Header */}
                 <View className="px-6 py-4 flex-row items-center border-b border-[#E6E6E6] bg-white">
                     <TouchableOpacity onPress={() => router.back()} className="mr-4 bg-[#F3F4F6] p-2 rounded-full">

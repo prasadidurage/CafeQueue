@@ -1,3 +1,4 @@
+import SuccessModal from "@/components/SuccessModal";
 import { useMenu } from "@/context/MenuContext";
 import { useOrders } from "@/context/OrderContext";
 import { useLocalSearchParams, useRouter } from "expo-router";
@@ -6,8 +7,8 @@ import {
   CheckCircle,
   Minus,
   Plus,
-  ShoppingCart,
   ShoppingBag,
+  ShoppingCart,
 } from "lucide-react-native";
 import React, { useEffect, useState } from "react";
 import {
@@ -32,9 +33,15 @@ const AddOrder = () => {
     { id: string; name: string; price: number; qty: number }[]
   >([]);
   const [isEditing, setIsEditing] = useState(false);
+  const [showSuccess, setShowSuccess] = useState(false);
+  const [successMsg, setSuccessMsg] = useState("");
 
   // Filter available items only
   const availableItems = menuItems.filter((item) => item.available);
+
+  const removeItemFromOrder = (id: string) => {
+    setSelectedItems((prev) => prev.filter((item) => item.id !== id));
+  };
 
   useEffect(() => {
     if (orderId) {
@@ -125,24 +132,32 @@ const AddOrder = () => {
     try {
       if (isEditing && typeof orderId === "string") {
         await updateOrder({ id: orderId, ...orderData });
-        Alert.alert("Success", "Order updated!", [
-          { text: "OK", onPress: () => router.back() },
-        ]);
+        setSuccessMsg("Order Updated!");
+        setShowSuccess(true);
       } else {
         await addOrder(orderData);
-        Alert.alert("Success", "Order sent to kitchen!", [
-          { text: "OK", onPress: () => router.back() },
-        ]);
+        setSuccessMsg("Sent to Kitchen!");
+        setShowSuccess(true);
       }
     } catch (error) {
       Alert.alert("Error", "Failed to save order");
     }
   };
 
+  const handleSuccessClose = () => {
+    setShowSuccess(false);
+    router.back();
+  };
+
   return (
     <View className="flex-1 bg-[#F9F5F0]">
       <StatusBar barStyle="dark-content" />
       <SafeAreaView className="flex-1" edges={["top"]}>
+        <SuccessModal
+          visible={showSuccess}
+          message={successMsg}
+          onClose={handleSuccessClose}
+        />
         {/* Header */}
         <View className="px-6 py-4 flex-row items-center border-b border-[#E6E6E6] bg-white">
           <TouchableOpacity
@@ -196,9 +211,9 @@ const AddOrder = () => {
                     style={
                       selectedItem
                         ? {
-                            borderColor: "#D4A373",
-                            borderWidth: 2,
-                          }
+                          borderColor: "#D4A373",
+                          borderWidth: 2,
+                        }
                         : {}
                     }
                   >

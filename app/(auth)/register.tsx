@@ -1,3 +1,4 @@
+import SuccessModal from "@/components/SuccessModal";
 import { useLoader } from "@/hooks/useLoader";
 import { registerUser } from "@/services/authService";
 import { useRouter } from "expo-router";
@@ -12,8 +13,8 @@ import {
   TouchableWithoutFeedback,
   View,
 } from "react-native";
-import { SafeAreaView } from "react-native-safe-area-context";
 import Animated, { FadeInDown, FadeInUp } from "react-native-reanimated";
+import { SafeAreaView } from "react-native-safe-area-context";
 
 const Register = () => {
   const router = useRouter();
@@ -23,6 +24,7 @@ const Register = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [conPassword, setConPassword] = useState("");
+  const [showSuccess, setShowSuccess] = useState(false);
 
   const handleRegister = async () => {
     if (isLoading) return;
@@ -39,18 +41,27 @@ const Register = () => {
     try {
       showLoader();
       await registerUser(name, email, password);
-      Alert.alert("Success", "Account created successfully!");
-      router.replace("/(auth)/login");
-    } catch (err) {
-      Alert.alert("Error", "Registration failed. Please try again.");
-    } finally {
       hideLoader();
+      setShowSuccess(true);
+    } catch (err) {
+      hideLoader();
+      Alert.alert("Error", "Registration failed. Please try again.");
     }
+  };
+
+  const handleSuccessClose = () => {
+    setShowSuccess(false);
+    router.replace("/(auth)/login");
   };
 
   return (
     <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
       <SafeAreaView className="flex-1 bg-[#FDFBF7]">
+        <SuccessModal
+          visible={showSuccess}
+          message="Account Created!"
+          onClose={handleSuccessClose}
+        />
         {/* Background Decorative Circles */}
         <Animated.View
           entering={FadeInUp.delay(200).duration(1000).springify()}
